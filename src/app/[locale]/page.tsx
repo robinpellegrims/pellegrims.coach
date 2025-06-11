@@ -5,10 +5,15 @@ import Projects from '@/components/Projects'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import { getTranslations } from '@/lib/translations'
-import { defaultLocale } from '@/lib/i18n'
+import { isValidLocale, type Locale } from '@/lib/i18n'
 
-export default function RootPage() {
-  const locale = defaultLocale
+type Props = {
+  params: Promise<{ locale: string }>
+}
+
+export default async function Home({ params }: Props) {
+  const { locale: localeParam } = await params
+  const locale: Locale = isValidLocale(localeParam) ? localeParam : 'en'
   const t = getTranslations(locale)
 
   return (

@@ -2,8 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
+import type { Locale } from '@/lib/i18n'
+import type { TranslationKey } from '@/lib/translations'
 
-export default function Contact() {
+type Props = {
+  locale: Locale
+  t: TranslationKey
+}
+
+export default function Contact({ t }: Props) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -96,15 +103,15 @@ export default function Contact() {
     return (
       <section id="contact" className="border-t-4 border-gray-200">
         <div className="max-w-2xl mx-auto px-6 py-24 text-center">
-          <h3 className="text-4xl font-bold text-gray-800 mb-6">Contact Me</h3>
+          <h3 className="text-4xl font-bold text-gray-800 mb-6">{t.contact.title}</h3>
           <div className="bg-green-50 border border-green-200 rounded-lg p-8">
-            <h4 className="text-xl font-semibold text-green-800 mb-2">Thank you for your message!</h4>
-            <p className="text-green-700">I&apos;ll get back to you as soon as possible.</p>
+            <h4 className="text-xl font-semibold text-green-800 mb-2">{t.contact.success}</h4>
+            <p className="text-green-700">{t.contact.successMsg}</p>
             <button
               onClick={() => setStatus('idle')}
               className="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
             >
-              Send another message
+              {t.contact.sendAnother}
             </button>
           </div>
         </div>
@@ -115,9 +122,9 @@ export default function Contact() {
   return (
     <section id="contact" className="border-t-4 border-gray-200">
       <div className="max-w-2xl mx-auto px-6 py-24">
-        <h3 className="text-4xl font-bold text-gray-800 mb-6">Contact Me</h3>
+        <h3 className="text-4xl font-bold text-gray-800 mb-6">{t.contact.title}</h3>
         <p className="text-lg text-gray-600 mb-12">
-          Feel free to contact me and see what I can do for you
+          {t.contact.intro}
         </p>
         
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -126,7 +133,7 @@ export default function Contact() {
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder={t.contact.form.name}
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -137,7 +144,7 @@ export default function Contact() {
               <input
                 type="email"
                 name="email"
-                placeholder="Email"
+                placeholder={t.contact.form.email}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -150,7 +157,7 @@ export default function Contact() {
             <input
               type="text"
               name="subject"
-              placeholder="Subject"
+              placeholder={t.contact.form.subject}
               value={formData.subject}
               onChange={handleChange}
               required
@@ -161,7 +168,7 @@ export default function Contact() {
           <div>
             <textarea
               name="message"
-              placeholder="Message"
+              placeholder={t.contact.form.message}
               rows={6}
               value={formData.message}
               onChange={handleChange}
@@ -183,7 +190,7 @@ export default function Contact() {
           {status === 'error' && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <p className="text-red-700">
-                An error occurred while trying to send your message, please try again.
+                {t.contact.error}
               </p>
             </div>
           )}
@@ -194,7 +201,7 @@ export default function Contact() {
               disabled={status === 'sending'}
               className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {status === 'sending' ? 'Sending...' : 'Send Message'}
+              {status === 'sending' ? t.contact.form.sending : t.contact.form.send}
             </button>
           </div>
         </form>

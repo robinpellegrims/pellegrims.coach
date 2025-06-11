@@ -1,53 +1,60 @@
 import Image from 'next/image'
+import type { Locale } from '@/lib/i18n'
+import type { TranslationKey } from '@/lib/translations'
 
-export default function Projects() {
+type Props = {
+  locale: Locale
+  t: TranslationKey
+}
+
+export default function Projects({ t }: Props) {
   const projects = [
     {
       image: "/images/pic01.jpg",
-      title: "Coaching Elite Swimmers",
-      description: "Between 2009 and 2021.",
+      title: t.projects.items.eliteSwimmers.title,
+      description: t.projects.items.eliteSwimmers.description,
       link: null
     },
     {
       image: "/images/rwanda1.jpg", 
-      title: "Rwanda Epic",
-      description: "Novembre 2023",
+      title: t.projects.items.rwanda.title,
+      description: t.projects.items.rwanda.description,
       link: "https://www.rwandanepic.com/"
     },
     {
       image: "/images/qlxnow.png",
-      title: "QLX", 
-      description: "Coach at QLXNOW.com",
+      title: t.projects.items.qlx.title, 
+      description: t.projects.items.qlx.description,
       link: "https://qlxnow.com"
     },
     {
       image: "/images/Trainingpeaks logo.png",
-      title: "Training Plans",
-      description: "Swimming and running plans available on TrainingPeaks.com",
+      title: t.projects.items.trainingPlans.title,
+      description: t.projects.items.trainingPlans.description,
       link: "https://www.trainingpeaks.com/coach/pellegrims#trainingplans"
     },
     {
       image: "/images/rgf.jpg", 
-      title: "Start 2 Swim",
-      description: "Company group sessions 2024",
+      title: t.projects.items.startToSwim.title,
+      description: t.projects.items.startToSwim.description,
       link: null
     },
     {
       image: "/images/pic03.jpg",
-      title: "Training camps",
-      description: "On request - minimum 6 athletes", 
+      title: t.projects.items.trainingCamps.title,
+      description: t.projects.items.trainingCamps.description, 
       link: null
     },
     {
       image: "/images/rdmlogo.png",
-      title: "Roc Du Maroc",
-      description: "Octobre 2022",
+      title: t.projects.items.rocDuMaroc.title,
+      description: t.projects.items.rocDuMaroc.description,
       link: "https://www.rocdumaroc.com/"
     },
     {
       image: "/images/pic02.jpg",
-      title: "Gramchallenge",
-      description: "Working as physical and mental coach at Gramchallenge.com between 2020 & 2024",
+      title: t.projects.items.gramchallenge.title,
+      description: t.projects.items.gramchallenge.description,
       link: "https://gramchallenge.com"
     }
   ]
@@ -55,9 +62,9 @@ export default function Projects() {
   return (
     <section id="projects" className="border-t-4 border-gray-200">
       <div className="max-w-6xl mx-auto px-6 py-24">
-        <h3 className="text-4xl font-bold text-gray-800 mb-6">Projects</h3>
+        <h3 className="text-4xl font-bold text-gray-800 mb-6">{t.projects.title}</h3>
         <p className="text-lg text-gray-600 mb-12">
-          These are the most important projects I&apos;ve been working in the past, now, and in the future
+          {t.projects.intro}
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -108,7 +115,7 @@ export default function Projects() {
                   <p className="text-gray-600 leading-relaxed">
                     {project.description.includes('Gramchallenge.com') ? (
                       <>
-                        Working as physical and mental coach at{' '}
+                        {t.projects.linkTexts.workingAsCoach}{' '}
                         <a 
                           href="https://www.gramchallenge.com/"
                           target="_blank"
@@ -117,11 +124,11 @@ export default function Projects() {
                         >
                           Gramchallenge.com
                         </a>
-                        {' '}between 2020 &amp; 2024
+                        {' '}{t.projects.linkTexts.between2020And2024}
                       </>
                     ) : project.description.includes('TrainingPeaks.com') ? (
                       <>
-                        Swimming and running plans available on{' '}
+                        {t.projects.linkTexts.plansAvailableOn}{' '}
                         <a 
                           href="https://www.trainingpeaks.com/coach/pellegrims#trainingplans"
                           target="_blank"
@@ -133,7 +140,7 @@ export default function Projects() {
                       </>
                     ) : project.description.includes('QLXNOW.com') ? (
                       <>
-                        Coach at{' '}
+                        {t.projects.linkTexts.coachAt}{' '}
                         <a 
                           href="https://www.QLXNOW.com/"
                           target="_blank"

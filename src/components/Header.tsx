@@ -1,13 +1,19 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedin, FaEnvelope, FaBars, FaTimes, FaGlobe } from 'react-icons/fa'
-import { useTranslation } from '@/context/TranslationContext'
+import type { Locale } from '@/lib/i18n'
+import type { TranslationKey } from '@/lib/translations'
 
-export default function Header() {
+type Props = {
+  locale: Locale
+  t: TranslationKey
+}
+
+export default function Header({ locale, t }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const { t, language, setLanguage } = useTranslation()
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -15,6 +21,14 @@ export default function Header() {
       element.scrollIntoView({ behavior: 'smooth' })
       setIsMenuOpen(false)
     }
+  }
+
+  const otherLocale = locale === 'en' ? 'nl' : 'en'
+  const otherLocalePath = locale === 'en' ? '/nl' : '/'
+
+  const handleLanguageSwitch = () => {
+    // Mark that user has manually chosen a language
+    sessionStorage.setItem('manualLanguageChoice', 'true')
   }
 
   return (
@@ -37,7 +51,7 @@ export default function Header() {
             </a>
           </h1>
           <p className="text-gray-300 italic">
-            {t('profile')}
+            {t.profile}
           </p>
         </div>
 
@@ -48,7 +62,7 @@ export default function Header() {
                 onClick={() => scrollToSection('about')}
                 className="w-full py-4 px-0 text-white hover:bg-white hover:text-gray-900 transition-colors text-center block"
               >
-                {t('menu-about')}
+                {t.nav.about}
               </button>
             </li>
             <li className="border-t border-gray-700">
@@ -56,7 +70,7 @@ export default function Header() {
                 onClick={() => scrollToSection('coaching')}
                 className="w-full py-4 px-0 text-white hover:bg-white hover:text-gray-900 transition-colors text-center block"
               >
-                {t('menu-coaching')}
+                {t.nav.coaching}
               </button>
             </li>
             <li className="border-t border-gray-700">
@@ -64,7 +78,7 @@ export default function Header() {
                 onClick={() => scrollToSection('projects')}
                 className="w-full py-4 px-0 text-white hover:bg-white hover:text-gray-900 transition-colors text-center block"
               >
-                {t('menu-projects')}
+                {t.nav.projects}
               </button>
             </li>
             <li className="border-t border-gray-700">
@@ -72,7 +86,7 @@ export default function Header() {
                 onClick={() => scrollToSection('contact')}
                 className="w-full py-4 px-0 text-white hover:bg-white hover:text-gray-900 transition-colors text-center block"
               >
-                {t('menu-contact')}
+                {t.nav.contact}
               </button>
             </li>
           </ul>
@@ -81,13 +95,14 @@ export default function Header() {
         <footer className="p-8">
           {/* Language Switcher */}
           <div className="flex justify-center mb-4">
-            <button
-              onClick={() => setLanguage(language === 'en' ? 'nl' : 'en')}
+            <Link
+              href={otherLocalePath}
+              onClick={handleLanguageSwitch}
               className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors text-sm"
             >
               <FaGlobe size={16} />
-              <span>{language === 'en' ? 'NL' : 'EN'}</span>
-            </button>
+              <span>{otherLocale.toUpperCase()}</span>
+            </Link>
           </div>
           
           <ul className="flex justify-center space-x-4">
@@ -169,7 +184,7 @@ export default function Header() {
                 />
               </div>
               <h1 className="text-xl font-bold text-white mb-2">Ward Pellegrims</h1>
-              <p className="text-gray-300 italic text-sm">{t('profile')}</p>
+              <p className="text-gray-300 italic text-sm">{t.profile}</p>
             </div>
 
             <nav className="px-0">
@@ -179,7 +194,7 @@ export default function Header() {
                     onClick={() => scrollToSection('about')}
                     className="w-full py-4 text-white hover:bg-white hover:text-gray-900 transition-colors"
                   >
-                    {t('menu-about')}
+                    {t.nav.about}
                   </button>
                 </li>
                 <li className="border-t border-gray-700">
@@ -187,7 +202,7 @@ export default function Header() {
                     onClick={() => scrollToSection('coaching')}
                     className="w-full py-4 text-white hover:bg-white hover:text-gray-900 transition-colors"
                   >
-                    {t('menu-coaching')}
+                    {t.nav.coaching}
                   </button>
                 </li>
                 <li className="border-t border-gray-700">
@@ -195,7 +210,7 @@ export default function Header() {
                     onClick={() => scrollToSection('projects')}
                     className="w-full py-4 text-white hover:bg-white hover:text-gray-900 transition-colors"
                   >
-                    {t('menu-projects')}
+                    {t.nav.projects}
                   </button>
                 </li>
                 <li className="border-t border-gray-700">
@@ -203,7 +218,7 @@ export default function Header() {
                     onClick={() => scrollToSection('contact')}
                     className="w-full py-4 text-white hover:bg-white hover:text-gray-900 transition-colors"
                   >
-                    {t('menu-contact')}
+                    {t.nav.contact}
                   </button>
                 </li>
               </ul>
@@ -212,13 +227,14 @@ export default function Header() {
             <div className="p-8">
               {/* Mobile Language Switcher */}
               <div className="flex justify-center mb-6">
-                <button
-                  onClick={() => setLanguage(language === 'en' ? 'nl' : 'en')}
+                <Link
+                  href={otherLocalePath}
+                  onClick={handleLanguageSwitch}
                   className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors"
                 >
                   <FaGlobe size={20} />
-                  <span>{language === 'en' ? 'NL' : 'EN'}</span>
-                </button>
+                  <span>{otherLocale.toUpperCase()}</span>
+                </Link>
               </div>
               
               <ul className="flex justify-center space-x-6">

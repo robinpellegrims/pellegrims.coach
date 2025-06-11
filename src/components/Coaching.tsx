@@ -1,43 +1,46 @@
-'use client'
-
 import { FaCalendarAlt, FaBiking, FaVideo, FaMedal, FaSwimmer, FaSun } from 'react-icons/fa'
-import { useTranslation } from '@/context/TranslationContext'
+import type { Locale } from '@/lib/i18n'
+import type { TranslationKey } from '@/lib/translations'
 
-export default function Coaching() {
-  const { t } = useTranslation()
+type Props = {
+  locale: Locale
+  t: TranslationKey
+}
+
+export default function Coaching({ t }: Props) {
   const services = [
     {
       icon: <FaCalendarAlt className="text-white" />,
-      key: "personal-coaching-swimming-training"
+      key: t.coaching.services.swimmingTraining
     },
     {
       icon: <FaBiking className="text-white" />,
-      key: "personal-coaching-triathlon-training"
+      key: t.coaching.services.triathlonTraining
     },
     {
       icon: <FaVideo className="text-white" />,
-      key: "personal-coaching-swimming-technique"
+      key: t.coaching.services.swimmingTechnique
     },
     {
       icon: <FaMedal className="text-white" />,
-      key: "personal-coaching-swimming-technique-clubs"
+      key: t.coaching.services.swimmingTechniqueClubs
     },
     {
       icon: <FaSwimmer className="text-white" />,
-      key: "personal-coaching-adults"
+      key: t.coaching.services.adults
     },
     {
       icon: <FaSun className="text-white" />,
-      key: "personal-coaching-training-camp"
+      key: t.coaching.services.trainingCamp
     }
   ]
 
   return (
     <section id="coaching" className="border-t-4 border-gray-200">
       <div className="max-w-4xl mx-auto px-6 py-24">
-        <h3 className="text-4xl font-bold text-gray-800 mb-6">{t('personal-coaching-title')}</h3>
+        <h3 className="text-4xl font-bold text-gray-800 mb-6">{t.coaching.title}</h3>
         <p className="text-lg text-gray-600 mb-12">
-          {t('personal-coaching-intro')}
+          {t.coaching.intro}
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -47,7 +50,7 @@ export default function Coaching() {
                 {service.icon}
               </div>
               <div className="flex-1">
-                <h4 className="font-medium text-gray-800 leading-tight">{t(service.key)}</h4>
+                <h4 className="font-medium text-gray-800 leading-tight">{service.key}</h4>
               </div>
             </div>
           ))}
