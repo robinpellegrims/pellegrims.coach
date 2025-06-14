@@ -21,11 +21,25 @@ export default function Contact({ t }: Props) {
   const [isEmailJSReady, setIsEmailJSReady] = useState(false)
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
 
+  // Check if services are enabled based on environment variables
+  const isRecaptchaEnabled = !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+  const isEmailJSEnabled = !!(
+    process.env.NEXT_PUBLIC_EMAILJS_USER_ID &&
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID &&
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+  )
+
   useEffect(() => {
-    // Initialize EmailJS when component mounts
+    // Initialize EmailJS when component mounts (if enabled)
     const initEmailJS = () => {
+      if (!isEmailJSEnabled) {
+        console.warn('EmailJS is disabled - missing environment variables')
+        return
+      }
+
       try {
-        emailjs.init('user_XN4D5XCgg7cTAaQJIkE71')
+        const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+        emailjs.init(userId)
         setIsEmailJSReady(true)
       } catch (error) {
         console.warn('EmailJS initialization failed:', error)
@@ -33,7 +47,7 @@ export default function Contact({ t }: Props) {
     }
 
     initEmailJS()
-  }, [])
+  }, [isEmailJSEnabled])
 
   useEffect(() => {
     // Add reCAPTCHA callback to global scope
@@ -58,13 +72,14 @@ export default function Contact({ t }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!isEmailJSReady) {
-      console.warn('EmailJS not ready yet')
+    if (!isEmailJSEnabled || !isEmailJSReady) {
+      console.warn('EmailJS is not available or not ready yet')
       setStatus('error')
       return
     }
 
-    if (!recaptchaToken) {
+    // Check reCAPTCHA if enabled
+    if (isRecaptchaEnabled && !recaptchaToken) {
       console.warn('Please complete the reCAPTCHA verification')
       setStatus('error')
       return
@@ -73,16 +88,24 @@ export default function Contact({ t }: Props) {
     setStatus('sending')
 
     try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+      const userId = process.env.NEXT_PUBLIC_EMAILJS_USER_ID
+
+      if (!serviceId || !templateId || !userId) {
+        throw new Error('EmailJS environment variables are required: NEXT_PUBLIC_EMAILJS_SERVICE_ID, NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, NEXT_PUBLIC_EMAILJS_USER_ID')
+      }
+
       await emailjs.send(
-        'contact_service',
-        'contact_form', 
+        serviceId,
+        templateId,
         {
           name: formData.name,
           email: formData.email,
           subject: formData.subject,
           message: formData.message
         },
-        'user_XN4D5XCgg7cTAaQJIkE71'
+        userId
       )
       
       setStatus('success')
@@ -177,15 +200,17 @@ export default function Contact({ t }: Props) {
             />
           </div>
 
-          {/* reCAPTCHA */}
-          <div className="flex justify-center">
-            <div 
-              className="g-recaptcha" 
-              data-sitekey="6Lc5w0ocAAAAAINj9RiSNuQpeFhf-NQO8uzBexrk"
-              data-callback="recaptchaCallback"
-              data-expired-callback="recaptchaExpired"
-            ></div>
-          </div>
+          {/* reCAPTCHA - Show when environment variable is present */}
+          {isRecaptchaEnabled && (
+            <div className="flex justify-center">
+              <div 
+                className="g-recaptcha" 
+                data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                data-callback="recaptchaCallback"
+                data-expired-callback="recaptchaExpired"
+              ></div>
+            </div>
+          )}
 
           {status === 'error' && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
