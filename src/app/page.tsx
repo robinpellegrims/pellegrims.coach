@@ -14,7 +14,7 @@ export default function RootPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header locale={locale} t={t} />
-      <main className="lg:mr-96">
+      <main>
         <About locale={locale} t={t} />
         <Coaching locale={locale} t={t} />
         <Projects locale={locale} t={t} />

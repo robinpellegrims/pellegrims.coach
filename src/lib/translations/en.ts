@@ -25,7 +25,12 @@ export const en = {
     intro2: "Do you need a structured training plan and/or individual coaching based on the scientific knowledge I gathered during a Master in Sport Sciences and a Master in Rehabilitation Sciences?",
     intro3: "Do you want to explore your own limits and fulfill your ambitious physical goals?",
     intro4: "The silver medal at the Olympic Games in Rio 2016 was the highlight of my coaching career, but I want to help you reach your own highlights!",
-    bannerAlt: "Swimming banner"
+    bannerAlt: "Swimming banner",
+    exploreCoaching: "Explore My Coaching",
+    getInTouch: "Get In Touch",
+    myStory: "My Story",
+    yearsExperience: "Years Experience",
+    clientsCoached: "Clients Coached"
   },
   
   // Coaching section
@@ -39,6 +44,28 @@ export const en = {
       swimmingTechniqueClubs: "Swimming technique for clubs",
       adults: "Start 2 swim for companies",
       trainingCamp: "Training camps"
+    },
+    serviceDescriptions: {
+      swimmingTraining: "Personalized swimming training programs",
+      triathlonTraining: "Complete triathlon preparation",
+      swimmingTechnique: "Video analysis and technique improvement",
+      swimmingTechniqueClubs: "Club coaching and team development",
+      adults: "Adult swimming programs",
+      trainingCamp: "Intensive training camps"
+    },
+    cta: {
+      title: "Ready to Transform Your Performance?",
+      description: "Join hundreds of athletes who have achieved their goals with personalized coaching programs.",
+      button: "Start Your Journey"
+    },
+    learnMore: "Learn More",
+    highlights: {
+      oneOnOne: "1-on-1",
+      triathlon: "Triathlon",
+      video: "Video", 
+      clubs: "Clubs",
+      adults: "Adults",
+      camps: "Camps"
     }
   },
   
@@ -86,20 +113,42 @@ export const en = {
       plansAvailableOn: "Swimming and running plans available on", 
       coachAt: "Coach at",
       between2020And2024: "between 2020 & 2024"
+    },
+    // Section headers
+    featuredWork: "Featured Work",
+    otherProjects: "Other Projects",
+    // Action buttons
+    viewProject: "View Project",
+    learnMore: "Learn More",
+    view: "View",
+    // Categories
+    categories: {
+      eliteTraining: "Elite Training",
+      adventure: "Adventure",
+      technology: "Technology",
+      trainingPlans: "Training Plans",
+      community: "Community",
+      camps: "Camps",
+      platform: "Platform"
     }
   },
   
   // Footer section
   footer: {
-    copyright: "© Ward Pellegrims. All rights reserved.",
-    design: "Design:",
-    htmlUp: "HTML5 UP"
+    copyright: "© Ward Pellegrims. All rights reserved."
   },
   
   // Contact section
   contact: {
     title: "Contact Me",
     intro: "Feel free to contact me and see what I can do for you",
+    letsConnect: "Let's Connect",
+    email: "Email",
+    emailMessage: "Send me a message using the form below",
+    professionalCoach: "Professional Coach",
+    expertTitle: "Swimming & Triathlon Expert",
+    responseTime: "Response Time",
+    personalized: "Personalized",
     form: {
       name: "Name",
       email: "Email",

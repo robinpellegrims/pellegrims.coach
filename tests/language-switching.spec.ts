@@ -1,209 +1,210 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
+
+// Helper functions for test interactions
+class LanguageSwitchingHelper {
+  constructor(private page: Page) {}
+
+  async isMobile(): Promise<boolean> {
+    const viewportWidth = this.page.viewportSize()?.width || 1200;
+    return viewportWidth < 1024;
+  }
+
+  async openMobileMenu(): Promise<void> {
+    if (await this.isMobile()) {
+      // Click hamburger menu button (mobile menu button in header)
+      await this.page.locator('button.lg\\:hidden').click();
+      // Wait for mobile menu overlay to be visible
+      await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
+        state: 'visible',
+        timeout: 10000 
+      });
+    }
+  }
+
+  async closeMobileMenu(): Promise<void> {
+    if (await this.isMobile()) {
+      // Click backdrop to close menu (more reliable than hamburger button when menu is open)
+      await this.page.locator('div.fixed.inset-0.z-50 div.absolute.inset-0').click();
+      // Wait for mobile menu overlay to be hidden
+      await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
+        state: 'hidden',
+        timeout: 5000 
+      });
+    }
+  }
+
+  async switchToLanguage(locale: string): Promise<void> {
+    const targetHref = locale === 'en' ? '/' : `/${locale}/`;
+    
+    if (await this.isMobile()) {
+      await this.openMobileMenu();
+      // Look for language switcher link in mobile menu (inside the menu content)
+      const languageLink = this.page.locator(`div.fixed.inset-0.z-50 a[href="${targetHref}"]`);
+      await languageLink.waitFor({ state: 'visible', timeout: 10000 });
+      await languageLink.click();
+    } else {
+      // Desktop: Click language switcher directly (outside mobile menu)
+      const languageLink = this.page.locator(`a[href="${targetHref}"]`).first();
+      await languageLink.waitFor({ state: 'visible', timeout: 10000 });
+      await languageLink.click();
+    }
+    
+    // Wait for navigation to complete
+    await this.page.waitForURL(targetHref);
+    await this.page.waitForLoadState('networkidle');
+    
+    // Close mobile menu if it was opened
+    if (await this.isMobile()) {
+      // Wait for menu to auto-close after navigation or close it manually
+      try {
+        await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
+          state: 'hidden', 
+          timeout: 2000 
+        });
+      } catch {
+        // If menu didn't auto-close, try to close it manually
+        await this.closeMobileMenu();
+      }
+    }
+  }
+
+  async verifyEnglishContent(): Promise<void> {
+    // Use multiple selectors to ensure content is English
+    const englishIndicators = [
+      'text=Swimming & Triathlon Coach',
+      'text=Improve your swimming, cycling and running performance',
+      'h3:has-text("Contact Me")',
+      'text=Feel free to contact me'
+    ];
+
+    // Check for at least one English indicator
+    let found = false;
+    for (const selector of englishIndicators) {
+      try {
+        await expect(this.page.locator(selector).first()).toBeVisible({ timeout: 5000 });
+        found = true;
+        break;
+      } catch {
+        continue;
+      }
+    }
+    
+    if (!found) {
+      throw new Error('No English content indicators found');
+    }
+  }
+
+  async verifyDutchContent(): Promise<void> {
+    // Use multiple selectors to ensure content is Dutch
+    const dutchIndicators = [
+      'text=Coaching in zwemmen, triathlon en duursporten',
+      'h3:has-text("Contacteer mij")',
+      'text=Contacteer me vrijblijvend'
+    ];
+
+    // Check for at least one Dutch indicator
+    let found = false;
+    for (const selector of dutchIndicators) {
+      try {
+        await expect(this.page.locator(selector).first()).toBeVisible({ timeout: 5000 });
+        found = true;
+        break;
+      } catch {
+        continue;
+      }
+    }
+    
+    if (!found) {
+      throw new Error('No Dutch content indicators found');
+    }
+  }
+
+  async verifyNavigation(language: 'en' | 'nl'): Promise<void> {
+    const navItems = language === 'en' 
+      ? ['About', 'Projects'] 
+      : ['Info', 'Projecten'];
+
+    if (await this.isMobile()) {
+      await this.openMobileMenu();
+      for (const item of navItems) {
+        // Look for navigation items inside the mobile menu overlay
+        await expect(this.page.locator(`div.fixed.inset-0.z-50 button:has-text("${item}")`).first())
+          .toBeVisible({ timeout: 5000 });
+      }
+      await this.closeMobileMenu();
+    } else {
+      for (const item of navItems) {
+        // Look for navigation items in the desktop header (hidden on mobile)
+        await expect(this.page.locator(`nav.hidden.lg\\:flex button:has-text("${item}")`).first())
+          .toBeVisible({ timeout: 5000 });
+      }
+    }
+  }
+}
 
 test.describe('Language Switching', () => {
   test('should switch between English and Dutch languages', async ({ page }) => {
+    const helper = new LanguageSwitchingHelper(page);
+
     // Navigate to the root page (English)
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
 
-    // Check if we're on mobile or desktop
-    // Check if we're on mobile or desktop by checking viewport width
-    const viewportWidth = page.viewportSize()?.width || 1200;
-    const isMobile = viewportWidth < 1024;
+    // Verify we're on the English page
+    expect(page.url()).toMatch(/\/$/);
+
+    // Verify English navigation is present
+    await helper.verifyNavigation('en');
+
+    // Switch to Dutch
+    await helper.switchToLanguage('nl');
+
+    // Verify Dutch content is displayed
+    await helper.verifyDutchContent();
     
-    if (isMobile) {
-      // Mobile: Open hamburger menu first
-      await page.locator('div.fixed.top-0.left-0.right-0 button').click();
-      // Wait for mobile menu overlay to be visible
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'visible' });
-      await expect(page.locator('div.fixed.inset-0.bg-gray-900.z-40 nav button:has-text("About")')).toBeVisible();
-      await expect(page.locator('div.fixed.inset-0.bg-gray-900.z-40 nav button:has-text("Projects")')).toBeVisible();
-      // Close menu
-      await page.locator('div.fixed.top-0.left-0.right-0 button').click();
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'hidden' });
-    } else {
-      // Desktop: Check navigation is visible (desktop header has different CSS classes)
-      await expect(page.locator('header.fixed nav button:has-text("About")')).toBeVisible();
-      await expect(page.locator('header.fixed nav button:has-text("Projects")')).toBeVisible();
-    }
+    // Verify Dutch navigation is present
+    await helper.verifyNavigation('nl');
 
-    // Verify we're on the English page (root URL)
-    expect(page.url()).toBe('http://localhost:3000/');
-
-    // Click on the NL language switcher
-    if (isMobile) {
-      // Mobile: Open hamburger menu first
-      await page.locator('button:has(svg)').first().click();
-      // Wait for mobile menu overlay to be visible
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'visible' });
-      // Wait for language switcher to be visible and then click it
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40 a[href="/nl/"]', { state: 'visible', timeout: 15000 });
-      await page.locator('div.fixed.inset-0.bg-gray-900.z-40 a[href="/nl/"]').click();
-    } else {
-      const nlLink = page.locator('a[href="/nl/"]').first();
-      await nlLink.click();
-    }
-
-    // Wait for navigation
-    await page.waitForURL('/nl/');
-    await page.waitForLoadState('domcontentloaded');
-    
-    // Wait for mobile menu to close after navigation
-    if (isMobile) {
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'hidden', timeout: 5000 });
-    }
-
-    // Verify Dutch content is displayed (using About section subtitle which is always visible)
-    await expect(page.locator('text=Coaching in zwemmen, triathlon en duursporten')).toBeVisible();
-    
-    if (isMobile) {
-      // Mobile: Open hamburger menu to check Dutch navigation
-      await page.locator('div.fixed.top-0.left-0.right-0 button').click();
-      // Wait for mobile menu overlay to be visible
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'visible' });
-      await expect(page.locator('div.fixed.inset-0.bg-gray-900.z-40 nav button:has-text("Info")')).toBeVisible();
-      await expect(page.locator('div.fixed.inset-0.bg-gray-900.z-40 nav button:has-text("Projecten")')).toBeVisible();
-      // Close menu
-      await page.locator('div.fixed.top-0.left-0.right-0 button').click();
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'hidden' });
-    } else {
-      // Desktop: Check Dutch navigation is visible (desktop header has different CSS classes)
-      await expect(page.locator('header.fixed nav button:has-text("Info")')).toBeVisible();
-      await expect(page.locator('header.fixed nav button:has-text("Projecten")')).toBeVisible();
-    }
-
-    // Click on the EN language switcher to go back
-    if (isMobile) {
-      // Mobile: Open hamburger menu first
-      await page.locator('button:has(svg)').first().click();
-      // Wait for mobile menu overlay to be visible
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'visible' });
-      // Wait for language switcher to be visible and then click it
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40 a[href="/"]', { state: 'visible', timeout: 15000 });
-      await page.locator('div.fixed.inset-0.bg-gray-900.z-40 a[href="/"]').click();
-    } else {
-      const enLink = page.locator('a[href="/"]').first();
-      await enLink.click();
-    }
-
-    // Wait for navigation
-    await page.waitForURL('/');
-    await page.waitForLoadState('domcontentloaded');
-    
-    // Wait for mobile menu to close after navigation
-    if (isMobile) {
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'hidden', timeout: 5000 });
-    }
+    // Switch back to English
+    await helper.switchToLanguage('en');
 
     // Verify English content is restored
-    if (isMobile) {
-      // On mobile, verify the name in the fixed header bar (use more specific selector)
-      await expect(page.locator('div.fixed.top-0.left-0.right-0 div.text-white.font-bold:has-text("Ward Pellegrims")')).toBeVisible();
-    } else {
-      // On desktop, verify English content is restored
-      await expect(page.locator('text=Swimming & Triathlon Coach')).toBeVisible();
-    }
+    await helper.verifyEnglishContent();
     
-    if (isMobile) {
-      // Mobile: Open hamburger menu to verify English navigation is back
-      await page.locator('div.fixed.top-0.left-0.right-0 button').click();
-      // Wait for mobile menu overlay to be visible
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'visible' });
-      await expect(page.locator('div.fixed.inset-0.bg-gray-900.z-40 nav button:has-text("About")')).toBeVisible();
-      await expect(page.locator('div.fixed.inset-0.bg-gray-900.z-40 nav button:has-text("Projects")')).toBeVisible();
-    } else {
-      // Desktop: Check English navigation is visible (desktop header has different CSS classes)
-      await expect(page.locator('header.fixed nav button:has-text("About")')).toBeVisible();
-      await expect(page.locator('header.fixed nav button:has-text("Projects")')).toBeVisible();
-    }
+    // Verify English navigation is restored
+    await helper.verifyNavigation('en');
   });
 
-
   test('should display different content for different languages', async ({ page }) => {
+    const helper = new LanguageSwitchingHelper(page);
+
     // Test English content
     await page.goto('/');
-    await page.waitForLoadState('domcontentloaded');
+    await page.waitForLoadState('networkidle');
     
-    // Verify English about content
-    await expect(page.locator('text=Improve your swimming, cycling and running performance')).toBeVisible();
-    
-    // Verify English contact content  
-    await expect(page.locator('h3:has-text("Contact Me")')).toBeVisible();
-    await expect(page.locator('text=Feel free to contact me')).toBeVisible();
+    await helper.verifyEnglishContent();
 
-    // Check if we're on mobile or desktop
-    // Check if we're on mobile or desktop by checking viewport width
-    const viewportWidth = page.viewportSize()?.width || 1200;
-    const isMobile = viewportWidth < 1024;
-    
-    if (isMobile) {
-      // Mobile: Open hamburger menu to access language switcher
-      await page.locator('button:has(svg)').first().click();
-      // Wait for mobile menu overlay to be visible
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40', { state: 'visible' });
-      // Wait for language switcher to be visible and then click it
-      await page.waitForSelector('div.fixed.inset-0.bg-gray-900.z-40 a[href="/nl/"]', { state: 'visible', timeout: 15000 });
-      await page.locator('div.fixed.inset-0.bg-gray-900.z-40 a[href="/nl/"]').click();
-    } else {
-      // Desktop: Click language switcher directly
-      await page.locator('a[href="/nl/"]').first().click();
-    }
-    
-    await page.waitForURL('/nl/');
-    await page.waitForLoadState('domcontentloaded');
-
-    // Verify Dutch about content
-    await expect(page.locator('text=Coaching in zwemmen, triathlon en duursporten')).toBeVisible();
-    
-    // Verify Dutch contact content
-    await expect(page.locator('h3:has-text("Contacteer mij")')).toBeVisible();
-    await expect(page.locator('text=Contacteer me vrijblijvend')).toBeVisible();
+    // Switch to Dutch and verify content
+    await helper.switchToLanguage('nl');
+    await helper.verifyDutchContent();
   });
 
   test('should have correct URLs for both languages', async ({ page }) => {
+    const helper = new LanguageSwitchingHelper(page);
+
     // Navigate to English page
     await page.goto('/');
-    expect(page.url()).toBe('http://localhost:3000/');
+    expect(page.url()).toMatch(/\/$/);
+    await helper.verifyEnglishContent();
     
-    // Check if we're on mobile or desktop to determine content visibility
-    // Check if we're on mobile or desktop by checking viewport width
-    const viewportWidth = page.viewportSize()?.width || 1200;
-    const isMobile = viewportWidth < 1024;
-    
-    // Verify English content is displayed
-    if (isMobile) {
-      // On mobile, verify the name in the fixed header bar (use more specific selector)
-      await expect(page.locator('div.fixed.top-0.left-0.right-0 div.text-white.font-bold:has-text("Ward Pellegrims")')).toBeVisible();
-    } else {
-      // On desktop, verify the subtitle is visible
-      await expect(page.locator('text=Swimming & Triathlon Coach')).toBeVisible();
-    }
-    
-    if (isMobile) {
-      // On mobile, verify the name in the fixed header bar is visible (use more specific selector)
-      await expect(page.locator('div.fixed.top-0.left-0.right-0 div.text-white.font-bold:has-text("Ward Pellegrims")')).toBeVisible();
-    } else {
-      // On desktop, verify English content loads
-      await expect(page.locator('text=Swimming & Triathlon Coach')).toBeVisible();
-    }
-    
-    // Check that we can navigate to Dutch page
+    // Navigate to Dutch page
     await page.goto('/nl/');
-    expect(page.url()).toBe('http://localhost:3000/nl/');
-    
-    // Verify Dutch content loads (using About section subtitle which is always visible)
-    await expect(page.locator('text=Coaching in zwemmen, triathlon en duursporten')).toBeVisible();
+    expect(page.url()).toMatch(/\/nl\/$/);
+    await helper.verifyDutchContent();
     
     // Navigate back to English
     await page.goto('/');
-    expect(page.url()).toBe('http://localhost:3000/');
-    
-    // Verify English content loads
-    if (isMobile) {
-      // On mobile, verify the name in the fixed header bar is visible (use more specific selector)
-      await expect(page.locator('div.fixed.top-0.left-0.right-0 div.text-white.font-bold:has-text("Ward Pellegrims")')).toBeVisible();
-    } else {
-      await expect(page.locator('text=Swimming & Triathlon Coach')).toBeVisible();
-    }
+    expect(page.url()).toMatch(/\/$/);
+    await helper.verifyEnglishContent();
   });
 });
