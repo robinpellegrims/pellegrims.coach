@@ -52,13 +52,18 @@ export const viewport = {
 };
 
 export default async function LocaleLayout({ children }: Props) {
+  // Only load reCAPTCHA script if the site key is configured
+  const isRecaptchaEnabled = !!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   return (
     <>
       {children}
-      <Script 
-        src="https://www.google.com/recaptcha/api.js"
-        strategy="lazyOnload"
-      />
+      {isRecaptchaEnabled && (
+        <Script 
+          src="https://www.google.com/recaptcha/api.js"
+          strategy="lazyOnload"
+        />
+      )}
     </>
   );
 }
