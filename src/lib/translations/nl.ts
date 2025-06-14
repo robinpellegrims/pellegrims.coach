@@ -25,7 +25,12 @@ export const nl = {
     intro2: "Heb je nood aan een gestructureerd schema of individuele begeleiding, wetenschappelijk onderbouwd dankzij mijn achtergrond als Master in de Bewegingswetenschappen en Master in de Revalidatiewetenschappen?",
     intro3: "Wil je op een verantwoorde manier je limieten opzoeken en hierdoor jouw ambitieuze sportprestatie waarmaken?",
     intro4: "De zilveren medaille van Pieter Timmers op de Olympische spelen van 2016 in Rio is voorlopig het hoogtepunt in mijn loopbaan als coach, maar ik wil er graag bij zijn wanneer jij je eigen sportieve doel waarmaakt!",
-    bannerAlt: "Zwembanner"
+    bannerAlt: "Zwembanner",
+    exploreCoaching: "Ontdek mijn coaching",
+    getInTouch: "Neem contact op",
+    myStory: "Mijn verhaal",
+    yearsExperience: "Jaar ervaring",
+    clientsCoached: "Gecoachte atleten"
   },
   
   // Coaching section
@@ -39,6 +44,28 @@ export const nl = {
       swimmingTechniqueClubs: "Technieksessies voor zwemclubs",
       adults: "Learn to swim voor volwassenen",
       trainingCamp: "Trainingskampen"
+    },
+    serviceDescriptions: {
+      swimmingTraining: "Gepersonaliseerde zwemtrainingsprogramma's",
+      triathlonTraining: "Volledige triathlonvoorbereiding",
+      swimmingTechnique: "Video-analyse en techniekverbetering",
+      swimmingTechniqueClubs: "Clubcoaching en teamontwikkeling",
+      adults: "Zwemprogramma's voor volwassenen",
+      trainingCamp: "Intensieve trainingskampen"
+    },
+    cta: {
+      title: "Klaar om je prestaties te transformeren?",
+      description: "Sluit je aan bij honderden atleten die hun doelen hebben bereikt met gepersonaliseerde coachingprogramma's.",
+      button: "Start je reis"
+    },
+    learnMore: "Meer info",
+    highlights: {
+      oneOnOne: "1-op-1",
+      triathlon: "Triathlon", 
+      video: "Video",
+      clubs: "Clubs",
+      adults: "Volwassenen",
+      camps: "Kampen"
     }
   },
   
@@ -86,20 +113,42 @@ export const nl = {
       plansAvailableOn: "Zwem- en loopschema's beschikbaar op",
       coachAt: "Coach bij",
       between2020And2024: "tussen 2020 & 2024"
+    },
+    // Section headers
+    featuredWork: "Uitgelicht werk",
+    otherProjects: "Andere projecten",
+    // Action buttons
+    viewProject: "Bekijk project",
+    learnMore: "Meer info",
+    view: "Bekijk",
+    // Categories
+    categories: {
+      eliteTraining: "Elite training",
+      adventure: "Avontuur",
+      technology: "Technologie",
+      trainingPlans: "Trainingschema's",
+      community: "Gemeenschap",
+      camps: "Kampen",
+      platform: "Platform"
     }
   },
   
   // Footer section
   footer: {
-    copyright: "© Ward Pellegrims. Alle rechten voorbehouden.",
-    design: "Ontwerp:",
-    htmlUp: "HTML5 UP"
+    copyright: "© Ward Pellegrims. Alle rechten voorbehouden."
   },
   
   // Contact section
   contact: {
     title: "Contacteer mij",
     intro: "Contacteer me vrijblijvend via onderstaand formulier en kijk wat ik voor jou kan betekenen",
+    letsConnect: "Laten we verbinden",
+    email: "E-mail",
+    emailMessage: "Stuur me een bericht via onderstaand formulier",
+    professionalCoach: "Professionele coach",
+    expertTitle: "Zwem- en triathlonexpert",
+    responseTime: "Reactietijd",
+    personalized: "Gepersonaliseerd",
     form: {
       name: "Naam",
       email: "E-mail",
