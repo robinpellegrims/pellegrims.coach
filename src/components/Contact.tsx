@@ -126,7 +126,8 @@ export default function Contact({ t }: Props) {
           name: formData.name,
           email: formData.email,
           subject: formData.subject,
-          message: formData.message
+          message: formData.message,
+          'g-recaptcha-response': recaptchaToken
         },
         userId
       )
