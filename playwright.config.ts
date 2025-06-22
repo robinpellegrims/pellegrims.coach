@@ -51,13 +51,23 @@ export default defineConfig({
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { 
+        ...devices['iPhone 12'],
+        // Mobile Safari specific settings for better test stability
+        actionTimeout: 30000, // Increased timeout for Mobile Safari
+        navigationTimeout: 60000, // Longer navigation timeout
+        // Additional time for Mobile Safari to process interactions
+        launchOptions: {
+          slowMo: process.env.CI ? 100 : 0, // Slow down interactions in CI for Mobile Safari
+        },
+      },
+      retries: process.env.CI ? 3 : 1, // More retries for Mobile Safari in CI
     },
   ],
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx serve out -l 3000',
+    command: 'npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     stdout: 'ignore',

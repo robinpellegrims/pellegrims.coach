@@ -15,6 +15,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = isValidLocale(localeParam) ? localeParam : 'en';
   const t = getTranslations(locale);
   
+  const siteUrl = 'https://www.pellegrims.coach';
+  const pageUrl = locale === 'en' ? siteUrl : `${siteUrl}/nl`;
+  const ogImageUrl = `${siteUrl}/images/banner_1920.jpg`;
+  
   return {
     title: t.meta.title,
     description: t.meta.description,
@@ -31,16 +35,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: t.meta.title,
       description: t.meta.description,
-      url: locale === 'en' ? 'https://wardpellegrims.be' : 'https://wardpellegrims.be/nl',
+      url: pageUrl,
       siteName: 'Ward Pellegrims Coaching',
       locale: locale === 'en' ? 'en_US' : 'nl_BE',
       type: 'website',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1920,
+          height: 1080,
+          alt: locale === 'en' ? 'Ward Pellegrims Swimming & Triathlon Coach' : 'Ward Pellegrims Zwem- en Triathloncoach',
+        }
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t.meta.title,
+      description: t.meta.description,
+      images: [ogImageUrl],
     },
     alternates: {
-      canonical: locale === 'en' ? 'https://wardpellegrims.be' : 'https://wardpellegrims.be/nl',
+      canonical: pageUrl,
       languages: {
-        'en-US': 'https://wardpellegrims.be',
-        'nl-BE': 'https://wardpellegrims.be/nl',
+        'en-US': siteUrl,
+        'nl-BE': `${siteUrl}/nl`,
       },
     },
   };
