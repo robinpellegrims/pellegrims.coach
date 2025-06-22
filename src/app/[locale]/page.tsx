@@ -4,6 +4,7 @@ import Coaching from '@/components/Coaching'
 import Projects from '@/components/Projects'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import StructuredData from '@/components/StructuredData'
 import { getTranslations } from '@/lib/translations'
 import { isValidLocale, type Locale } from '@/lib/i18n'
 
@@ -18,6 +19,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white">
+      <StructuredData locale={locale} />
       <Header locale={locale} t={t} />
       <main>
         <About locale={locale} t={t} />

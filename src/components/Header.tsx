@@ -27,7 +27,7 @@ export default function Header({ locale, t }: Props) {
   }
 
   const otherLocale = locale === 'en' ? 'nl' : 'en'
-  const otherLocalePath = locale === 'en' ? '/nl' : '/'
+  const otherLocalePath = locale === 'en' ? '/nl/' : '/en/'
 
   const handleLanguageSwitch = () => {
     // Mark that user has manually chosen a language
