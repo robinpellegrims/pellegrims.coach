@@ -82,10 +82,6 @@ export const en = {
         title: "Rwanda Epic",
         description: "November 2023"
       },
-      qlx: {
-        title: "QLX",
-        description: "Coach at QLXNOW.com"
-      },
       trainingPlans: {
         title: "Training Plans",
         description: "Swimming and running plans available on TrainingPeaks.com"
@@ -102,21 +98,13 @@ export const en = {
         title: "Roc Du Maroc",
         description: "October 2022"
       },
-      gramchallenge: {
-        title: "Gramchallenge",
-        description: "Working as physical and mental coach at Gramchallenge.com between 2020 & 2024"
-      }
     },
     // Dynamic text for projects with links
     linkTexts: {
-      workingAsCoach: "Working as physical and mental coach at",
-      plansAvailableOn: "Swimming and running plans available on", 
-      coachAt: "Coach at",
-      between2020And2024: "between 2020 & 2024"
+      plansAvailableOn: "Swimming and running plans available on"
     },
     // Section headers
     featuredWork: "Featured Work",
-    otherProjects: "Other Projects",
     // Action buttons
     viewProject: "View Project",
     learnMore: "Learn More",
@@ -125,11 +113,9 @@ export const en = {
     categories: {
       eliteTraining: "Elite Training",
       adventure: "Adventure",
-      technology: "Technology",
       trainingPlans: "Training Plans",
       community: "Community",
-      camps: "Camps",
-      platform: "Platform"
+      camps: "Camps"
     }
   },
   

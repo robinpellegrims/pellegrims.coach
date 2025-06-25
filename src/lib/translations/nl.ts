@@ -82,10 +82,6 @@ export const nl = {
         title: "Rwanda Epic",
         description: "November 2023"
       },
-      qlx: {
-        title: "QLX",
-        description: "Coach bij QLXNOW.com"
-      },
       trainingPlans: {
         title: "Training Plans",
         description: "Zwem- en loopschema's beschikbaar op TrainingPeaks.com"
@@ -102,21 +98,13 @@ export const nl = {
         title: "Roc Du Maroc",
         description: "Oktober 2022"
       },
-      gramchallenge: {
-        title: "Gramchallenge",
-        description: "Physical en mental coach bij Gramchallenge.com tussen 2020 & 2024"
-      }
     },
     // Dynamic text for projects with links
     linkTexts: {
-      workingAsCoach: "Physical en mental coach bij",
-      plansAvailableOn: "Zwem- en loopschema's beschikbaar op",
-      coachAt: "Coach bij",
-      between2020And2024: "tussen 2020 & 2024"
+      plansAvailableOn: "Zwem- en loopschema's beschikbaar op"
     },
     // Section headers
     featuredWork: "Uitgelicht werk",
-    otherProjects: "Andere projecten",
     // Action buttons
     viewProject: "Bekijk project",
     learnMore: "Meer info",
@@ -125,11 +113,9 @@ export const nl = {
     categories: {
       eliteTraining: "Elite training",
       adventure: "Avontuur",
-      technology: "Technologie",
       trainingPlans: "Trainingschema's",
       community: "Gemeenschap",
-      camps: "Kampen",
-      platform: "Platform"
+      camps: "Kampen"
     }
   },
   
