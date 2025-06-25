@@ -71,8 +71,6 @@ export const en = {
   
   // Projects section
   projects: {
-    title: "Projects",
-    intro: "These are the most important projects I've been working in the past, now, and in the future",
     items: {
       eliteSwimmers: {
         title: "Coaching Elite Swimmers",

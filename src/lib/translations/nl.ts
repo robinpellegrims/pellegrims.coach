@@ -71,8 +71,6 @@ export const nl = {
   
   // Projects section
   projects: {
-    title: "Projecten",
-    intro: "Deze zijn de belangrijkste projecten waar ik in het verleden, nu en in de toekomst aan heb gewerkt",
     items: {
       eliteSwimmers: {
         title: "Coaching van elite zwemmers",
