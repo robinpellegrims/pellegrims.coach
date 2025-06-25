@@ -146,11 +146,8 @@ export default function Projects({ t }: Props) {
             className="h-1 bg-gradient-ocean mx-auto mb-6"
           />
           <h2 className="text-4xl md:text-5xl font-display font-bold text-athletic-dark mb-6">
-            {t.projects.title}
+            {t.projects.featuredWork}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            {t.projects.intro}
-          </p>
         </motion.div>
 
         {/* Featured Projects */}
@@ -160,9 +157,6 @@ export default function Projects({ t }: Props) {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mb-16"
         >
-          <h3 className="text-2xl font-display font-bold text-athletic-dark mb-8 text-center">
-            {t.projects.featuredWork}
-          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, index) => (
               <motion.div
