@@ -59,8 +59,8 @@ export default function Header({ locale, t }: Props) {
                 <Image
                   src="/images/WPC_Logo_Horizontal_FullColour.png"
                   alt="Ward Pellegrims Coaching"
-                  width={120}
-                  height={48}
+                  width={240}
+                  height={96}
                   className="h-full w-auto object-contain"
                 />
               </div>
@@ -182,8 +182,8 @@ export default function Header({ locale, t }: Props) {
                     <Image
                       src="/images/WPC_Logo_Horizontal_FullColour.png"
                       alt="Ward Pellegrims Coaching"
-                      width={160}
-                      height={64}
+                      width={320}
+                      height={128}
                       className="h-full w-auto object-contain"
                     />
                   </div>
