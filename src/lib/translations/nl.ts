@@ -2,8 +2,8 @@ export const nl = {
   // Meta data
   meta: {
     title: "Ward Pellegrims Coaching",
-    description: "Elite coaching in zwemmen en triathlon. Zwem- en triathloncoach met online trainingsprogramma's, techniekanalyse en coaching services.",
-    keywords: "zwemcoach, triathloncoach, zwemtraining, triatlontraining, België, Ward Pellegrims"
+    description: "Elite coaching in zwemmen en triatlon. Zwem- en triatloncoach met online trainingsprogramma's, techniekanalyse en coaching services.",
+    keywords: "zwemcoach, triatloncoach, zwemtraining, triatlontraining, België, Ward Pellegrims"
   },
   
   // Navigation
@@ -15,12 +15,12 @@ export const nl = {
   },
   
   // Profile
-  profile: "Zwem- en triathloncoach",
+  profile: "Zwem- en triatloncoach",
   
   // About section
   about: {
     title: "Ward Pellegrims",
-    subtitle: "Coaching in zwemmen, triathlon en duursporten.",
+    subtitle: "Coaching in zwemmen, triatlon en duursporten.",
     intro1: "Wil jij gebruik maken van mijn 12 jaar ervaring in het begeleiden van Olympische topsporters en meedrijven op het Olympische succesverhaal dat ik samen met Ronald Gaastra heb mogen beleven?",
     intro2: "Heb je nood aan een gestructureerd schema of individuele begeleiding, wetenschappelijk onderbouwd dankzij mijn achtergrond als Master in de Bewegingswetenschappen en Master in de Revalidatiewetenschappen?",
     intro3: "Wil je op een verantwoorde manier je limieten opzoeken en hierdoor jouw ambitieuze sportprestatie waarmaken?",
@@ -39,7 +39,7 @@ export const nl = {
     intro: "Op de volgende manieren kan ik jou helpen om beter te presteren",
     services: {
       swimmingTraining: "Online trainingschema's zwemmen",
-      triathlonTraining: "Online trainingschema's triathlon",
+      triathlonTraining: "Online trainingschema's triatlon",
       swimmingTechnique: "Analyse Zwemtechniek",
       swimmingTechniqueClubs: "Technieksessies voor zwemclubs",
       adults: "Learn to swim voor volwassenen",
@@ -47,7 +47,7 @@ export const nl = {
     },
     serviceDescriptions: {
       swimmingTraining: "Gepersonaliseerde zwemtrainingsprogramma's",
-      triathlonTraining: "Volledige triathlonvoorbereiding",
+      triathlonTraining: "Volledige triatlonvoorbereiding",
       swimmingTechnique: "Video-analyse en techniekverbetering",
       swimmingTechniqueClubs: "Clubcoaching en teamontwikkeling",
       adults: "Zwemprogramma's voor volwassenen",
@@ -61,7 +61,7 @@ export const nl = {
     learnMore: "Meer info",
     highlights: {
       oneOnOne: "1-op-1",
-      triathlon: "Triathlon", 
+      triathlon: "Triatlon", 
       video: "Video",
       clubs: "Clubs",
       adults: "Volwassenen",
@@ -146,7 +146,7 @@ export const nl = {
     email: "E-mail",
     emailMessage: "Stuur me een bericht via onderstaand formulier",
     professionalCoach: "Professionele coach",
-    expertTitle: "Zwem- en triathlonexpert",
+    expertTitle: "Zwem- en triatlonexpert",
     responseTime: "Reactietijd",
     personalized: "Gepersonaliseerd",
     form: {

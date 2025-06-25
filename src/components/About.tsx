@@ -255,7 +255,7 @@ export default function About({ t }: Props) {
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-lg"
               >
                 <StatCard value="10+" label={t.about.yearsExperience} />
-                <StatCard value="500+" label={t.about.clientsCoached} />
+                <StatCard value="200+" label={t.about.clientsCoached} />
               </motion.div>
 
               {/* Floating Elements */}
