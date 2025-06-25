@@ -226,7 +226,7 @@ class LanguageSwitchingHelper {
     
     // Use multiple selectors to ensure content is Dutch
     const dutchIndicators = [
-      'text=Coaching in zwemmen, triathlon en duursporten',
+      'text=Coaching in zwemmen, triatlon en duursporten',
       'h3:has-text("Contacteer mij")',
       'text=Contacteer me vrijblijvend'
     ];
