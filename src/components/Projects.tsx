@@ -64,24 +64,12 @@ export default function Projects({ t }: Props) {
       featured: true
     },
     {
-      image: "/images/qlxnow.png",
-      title: t.projects.items.qlx.title, 
-      description: t.projects.linkTexts.coachAt,
-      link: "https://qlxnow.com",
-      category: t.projects.categories.technology,
-      featured: false,
-      embeddedLink: {
-        url: "https://www.QLXNOW.com/",
-        text: "QLXNOW.com"
-      }
-    },
-    {
       image: "/images/trainingpeaks-logo.png",
       title: t.projects.items.trainingPlans.title,
       description: t.projects.linkTexts.plansAvailableOn,
       link: "https://www.trainingpeaks.com/coach/pellegrims#trainingplans",
       category: t.projects.categories.trainingPlans,
-      featured: false,
+      featured: true,
       embeddedLink: {
         url: "https://www.trainingpeaks.com/coach/pellegrims#trainingplans",
         text: "TrainingPeaks.com"
@@ -93,7 +81,7 @@ export default function Projects({ t }: Props) {
       description: t.projects.items.startToSwim.description,
       link: null,
       category: t.projects.categories.community,
-      featured: false
+      featured: true
     },
     {
       image: "/images/pic03.jpg",
@@ -101,7 +89,7 @@ export default function Projects({ t }: Props) {
       description: t.projects.items.trainingCamps.description, 
       link: null,
       category: t.projects.categories.camps,
-      featured: false
+      featured: true
     },
     {
       image: "/images/rdmlogo.png",
@@ -109,25 +97,11 @@ export default function Projects({ t }: Props) {
       description: t.projects.items.rocDuMaroc.description,
       link: "https://www.rocdumaroc.com/",
       category: t.projects.categories.adventure,
-      featured: false
+      featured: true
     },
-    {
-      image: "/images/pic02.jpg",
-      title: t.projects.items.gramchallenge.title,
-      description: t.projects.linkTexts.workingAsCoach,
-      link: "https://gramchallenge.com",
-      category: t.projects.categories.platform,
-      featured: false,
-      embeddedLink: {
-        url: "https://www.gramchallenge.com/",
-        text: "Gramchallenge.com"
-      },
-      additionalText: t.projects.linkTexts.between2020And2024
-    }
   ]
 
   const featuredProjects = projects.filter(p => p.featured)
-  const regularProjects = projects.filter(p => !p.featured)
 
   const renderProjectDescription = (project: Project) => {
     if (project.embeddedLink) {
@@ -189,7 +163,7 @@ export default function Projects({ t }: Props) {
           <h3 className="text-2xl font-display font-bold text-athletic-dark mb-8 text-center">
             {t.projects.featuredWork}
           </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map((project, index) => (
               <motion.div
                 key={index}
@@ -201,7 +175,7 @@ export default function Projects({ t }: Props) {
               >
                 <AthleticCard variant="project">
                   {/* Image Container */}
-                  <div className="relative h-64 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden">
                     <motion.div
                       whileHover={{ scale: 1.1 }}
                       transition={{ duration: 0.6 }}
@@ -246,91 +220,8 @@ export default function Projects({ t }: Props) {
                   </div>
 
                   {/* Content */}
-                  <div className="p-8">
-                    <h3 className="text-xl font-display font-bold text-athletic-dark mb-3 group-hover:text-ocean-700 transition-colors">
-                      {project.link ? (
-                        <a 
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-ocean-600 transition-colors"
-                        >
-                          {project.title}
-                        </a>
-                      ) : (
-                        project.title
-                      )}
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed mb-4">
-                      {renderProjectDescription(project)}
-                    </p>
-                    
-                    {project.link && (
-                      <motion.a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-ocean-600 hover:text-ocean-700 font-medium group/link"
-                        whileHover={{ x: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <span>{t.projects.learnMore}</span>
-                        <FaArrowRight className="ml-2 text-sm group-hover/link:translate-x-1 transition-transform" />
-                      </motion.a>
-                    )}
-                  </div>
-                </AthleticCard>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Regular Projects Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isVisible ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          <h3 className="text-2xl font-display font-bold text-athletic-dark mb-8 text-center">
-            {t.projects.otherProjects}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {regularProjects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 1 + index * 0.1 }}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="group"
-              >
-                <AthleticCard variant="project">
-                  {/* Compact Image */}
-                  <div className="relative h-40 overflow-hidden">
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-full h-full"
-                    >
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className={project.image.includes('trainingpeaks-logo') ? "object-contain p-4 bg-white" : "object-cover"}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-                      />
-                    </motion.div>
-                    
-                    <div className="absolute top-3 left-3">
-                      <span className="px-2 py-1 bg-white/90 text-athletic-dark text-xs font-medium rounded-full">
-                        {project.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Compact Content */}
                   <div className="p-6">
-                    <h4 className="font-display font-bold text-athletic-dark mb-2 group-hover:text-ocean-700 transition-colors">
+                    <h4 className="text-lg font-display font-bold text-athletic-dark mb-2 group-hover:text-ocean-700 transition-colors">
                       {project.link ? (
                         <a 
                           href={project.link}
@@ -344,7 +235,7 @@ export default function Projects({ t }: Props) {
                         project.title
                       )}
                     </h4>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-sm text-gray-600 leading-relaxed mb-3">
                       {renderProjectDescription(project)}
                     </p>
                     
@@ -353,7 +244,7 @@ export default function Projects({ t }: Props) {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center text-ocean-600 hover:text-ocean-700 font-medium text-sm mt-3 group/link"
+                        className="inline-flex items-center text-ocean-600 hover:text-ocean-700 font-medium text-sm group/link"
                         whileHover={{ x: 3 }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
@@ -367,6 +258,7 @@ export default function Projects({ t }: Props) {
             ))}
           </div>
         </motion.div>
+
       </div>
     </section>
   )
