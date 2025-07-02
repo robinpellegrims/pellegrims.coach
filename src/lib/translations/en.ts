@@ -1,3 +1,5 @@
+import { ATHLETE_COUNTS } from '@/lib/constants'
+
 export const en = {
   // Meta data
   meta: {
@@ -38,31 +40,31 @@ export const en = {
     title: "Coaching",
     intro: "I can help you with the following aspects in order to make you a better athlete",
     services: {
-      swimmingTraining: "Online swimming programs",
-      triathlonTraining: "Online triathlon programs",
-      swimmingTechnique: "Swimming technique",
-      swimmingTechniqueClubs: "Swimming technique for clubs",
-      adults: "Start 2 swim for companies",
-      trainingCamp: "Training camps"
+      swimmingTraining: "Personalized Online training programs",
+      triathlonTraining: "Swim technique training",
+      swimmingTechnique: "Swim initiation & masterclass",
+      swimmingTechniqueClubs: "Start to swim",
+      adults: "Improve your swim",
+      trainingCamp: "Training camp guidance"
     },
     serviceDescriptions: {
-      swimmingTraining: "Personalized swimming training programs",
-      triathlonTraining: "Complete triathlon preparation",
-      swimmingTechnique: "Video analysis and technique improvement",
-      swimmingTechniqueClubs: "Club coaching and team development",
-      adults: "Adult swimming programs",
-      trainingCamp: "Intensive training camps"
+      swimmingTraining: "Swimming • Triathlon • Cycling • Running",
+      triathlonTraining: "Individual by appointment",
+      swimmingTechnique: "For clubs and companies",
+      swimmingTechniqueClubs: "Group training for adults",
+      adults: "Group training for advanced swimmers",
+      trainingCamp: "On request"
     },
     cta: {
-      title: "Ready to Transform Your Performance?",
-      description: "Join hundreds of athletes who have achieved their goals with personalized coaching programs.",
+      title: "Ready to Maximize Your Performance?",
+      description: `Join more than ${ATHLETE_COUNTS.CLIENTS} athletes who have achieved their goals with personalized coaching programs.`,
       button: "Start Your Journey"
     },
     learnMore: "Learn More",
     highlights: {
       oneOnOne: "1-on-1",
       triathlon: "Triathlon",
-      video: "Video", 
+      advanced: "Advanced",
       clubs: "Clubs",
       adults: "Adults",
       camps: "Camps"
@@ -86,11 +88,11 @@ export const en = {
       },
       startToSwim: {
         title: "Start 2 Swim",
-        description: "Company group sessions 2024"
+        description: "Company group sessions"
       },
       trainingCamps: {
         title: "Training camps",
-        description: "On request - minimum 6 athletes"
+        description: `On request - minimum ${ATHLETE_COUNTS.MIN_TRAINING_CAMP_SIZE} athletes`
       },
       rocDuMaroc: {
         title: "Roc Du Maroc",
@@ -128,7 +130,7 @@ export const en = {
     intro: "Feel free to contact me and see what I can do for you",
     letsConnect: "Let's Connect",
     email: "Email",
-    emailMessage: "Send me a message using the form below",
+    emailMessage: "Send me a message",
     professionalCoach: "Professional Coach",
     expertTitle: "Swimming & Triathlon Expert",
     responseTime: "Response Time",

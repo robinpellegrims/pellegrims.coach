@@ -1,5 +1,6 @@
 import Script from 'next/script'
 import { type Locale } from '@/lib/i18n'
+import { getStructuredDataDescription } from '@/lib/experience'
 
 interface StructuredDataProps {
   locale: Locale
@@ -35,8 +36,8 @@ export default function StructuredData({ locale }: StructuredDataProps) {
     "name": "Ward Pellegrims",
     "jobTitle": locale === 'en' ? "Swimming & Triathlon Coach" : "Zwem- en Triathloncoach",
     "description": locale === 'en'
-      ? "Professional swimming and triathlon coach with 12 years of experience, including coaching Olympic swimmers. Silver medal coach at Rio 2016 Olympics."
-      : "Professionele zwem- en triathloncoach met 12 jaar ervaring, inclusief het coachen van Olympische zwemmers. Zilveren medaille coach op de Olympische Spelen van Rio 2016.",
+      ? `${getStructuredDataDescription('en')}, including coaching Olympic swimmers. Silver medal coach at Rio 2016 Olympics.`
+      : `${getStructuredDataDescription('nl')}, inclusief het coachen van Olympische zwemmers. Zilveren medaille coach op de Olympische Spelen van Rio 2016.`,
     "url": pageUrl,
     "image": `${siteUrl}/images/banner_1920.jpg`,
     "knowsAbout": [

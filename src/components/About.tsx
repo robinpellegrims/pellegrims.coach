@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { AthleticButton } from '@/components/ui/athletic-button'
 import { StatCard } from '@/components/ui/stat-card'
+import { getYearsOfExperienceString, getExperienceText } from '@/lib/experience'
+import { ATHLETE_COUNTS } from '@/lib/constants'
 import type { Locale } from '@/lib/i18n'
 import type { TranslationKey } from '@/lib/translations'
 
@@ -13,7 +15,7 @@ type Props = {
   t: TranslationKey
 }
 
-export default function About({ t }: Props) {
+export default function About({ locale, t }: Props) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -179,7 +181,7 @@ export default function About({ t }: Props) {
                   animate={isVisible ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  {t.about.intro1}
+                  {getExperienceText(locale)}
                 </motion.p>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -254,8 +256,8 @@ export default function About({ t }: Props) {
                 transition={{ duration: 0.6, delay: 0.8 }}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-lg"
               >
-                <StatCard value="10+" label={t.about.yearsExperience} />
-                <StatCard value="200+" label={t.about.clientsCoached} />
+                <StatCard value={getYearsOfExperienceString()} label={t.about.yearsExperience} />
+                <StatCard value={`${ATHLETE_COUNTS.CLIENTS}+`} label={t.about.clientsCoached} />
               </motion.div>
 
               {/* Floating Elements */}
