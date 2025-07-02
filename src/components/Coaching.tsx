@@ -1,6 +1,6 @@
 'use client'
 
-import { FaCalendarAlt, FaBiking, FaVideo, FaMedal, FaSwimmer, FaSun } from 'react-icons/fa'
+import { FaChartLine, FaClipboardList, FaSun, FaSwimmer, FaUsers, FaWater } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { AthleticButton } from '@/components/ui/athletic-button'
@@ -34,39 +34,39 @@ export default function Coaching({ t }: Props) {
 
   const services = [
     {
-      icon: FaCalendarAlt,
+      icon: FaClipboardList,
       title: t.coaching.services.swimmingTraining,
       gradient: 'from-ocean-500 to-ocean-600',
       description: t.coaching.serviceDescriptions.swimmingTraining,
-      highlight: t.coaching.highlights.oneOnOne
-    },
-    {
-      icon: FaBiking,
-      title: t.coaching.services.triathlonTraining,
-      gradient: 'from-ocean-600 to-ocean-700',
-      description: t.coaching.serviceDescriptions.triathlonTraining,
       highlight: t.coaching.highlights.triathlon
     },
     {
-      icon: FaVideo,
+      icon: FaSwimmer,
+      title: t.coaching.services.triathlonTraining,
+      gradient: 'from-ocean-600 to-ocean-700',
+      description: t.coaching.serviceDescriptions.triathlonTraining,
+      highlight: t.coaching.highlights.oneOnOne
+    },
+    {
+      icon: FaUsers,
       title: t.coaching.services.swimmingTechnique,
       gradient: 'from-ocean-400 to-ocean-500',
       description: t.coaching.serviceDescriptions.swimmingTechnique,
-      highlight: t.coaching.highlights.video
-    },
-    {
-      icon: FaMedal,
-      title: t.coaching.services.swimmingTechniqueClubs,
-      gradient: 'from-ocean-700 to-ocean-800',
-      description: t.coaching.serviceDescriptions.swimmingTechniqueClubs,
       highlight: t.coaching.highlights.clubs
     },
     {
-      icon: FaSwimmer,
+      icon: FaWater,
+      title: t.coaching.services.swimmingTechniqueClubs,
+      gradient: 'from-ocean-700 to-ocean-800',
+      description: t.coaching.serviceDescriptions.swimmingTechniqueClubs,
+      highlight: t.coaching.highlights.adults
+    },
+    {
+      icon: FaChartLine,
       title: t.coaching.services.adults,
       gradient: 'from-ocean-500 to-ocean-700',
       description: t.coaching.serviceDescriptions.adults,
-      highlight: t.coaching.highlights.adults
+      highlight: t.coaching.highlights.advanced
     },
     {
       icon: FaSun,

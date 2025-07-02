@@ -1,3 +1,5 @@
+import { ATHLETE_COUNTS } from '@/lib/constants'
+
 export const nl = {
   // Meta data
   meta: {
@@ -38,31 +40,31 @@ export const nl = {
     title: "Coaching",
     intro: "Op de volgende manieren kan ik jou helpen om beter te presteren",
     services: {
-      swimmingTraining: "Online trainingschema's zwemmen",
-      triathlonTraining: "Online trainingschema's triatlon",
-      swimmingTechnique: "Analyse Zwemtechniek",
-      swimmingTechniqueClubs: "Technieksessies voor zwemclubs",
-      adults: "Learn to swim voor volwassenen",
-      trainingCamp: "Trainingskampen"
+      swimmingTraining: "Gepersonaliseerde Online trainingschema's",
+      triathlonTraining: "Zwemtechniektraining",
+      swimmingTechnique: "Zwem initiatie & masterclass",
+      swimmingTechniqueClubs: "Start to swim",
+      adults: "Improve your swim",
+      trainingCamp: "Begeleiding trainingstage"
     },
     serviceDescriptions: {
-      swimmingTraining: "Gepersonaliseerde zwemtrainingsprogramma's",
-      triathlonTraining: "Volledige triatlonvoorbereiding",
-      swimmingTechnique: "Video-analyse en techniekverbetering",
-      swimmingTechniqueClubs: "Clubcoaching en teamontwikkeling",
-      adults: "Zwemprogramma's voor volwassenen",
-      trainingCamp: "Intensieve trainingskampen"
+      swimmingTraining: "Zwemmen • Triatlon • Wielrennen • Lopen",
+      triathlonTraining: "Individueel op afspraak",
+      swimmingTechnique: "Voor clubs en bedrijven",
+      swimmingTechniqueClubs: "Groepstraining voor volwassenen",
+      adults: "Groepstraining voor gevorderden",
+      trainingCamp: "Op aanvraag"
     },
     cta: {
-      title: "Klaar om je prestaties te transformeren?",
-      description: "Sluit je aan bij honderden atleten die hun doelen hebben bereikt met gepersonaliseerde coachingprogramma's.",
+      title: "Klaar om je prestaties te maximaliseren?",
+      description: `Sluit je aan bij meer dan ${ATHLETE_COUNTS.CLIENTS} atleten die hun doelen hebben bereikt met gepersonaliseerde coachingprogramma's.`,
       button: "Start je reis"
     },
     learnMore: "Meer info",
     highlights: {
       oneOnOne: "1-op-1",
-      triathlon: "Triatlon", 
-      video: "Video",
+      triathlon: "Triatlon",
+      advanced: "Gevorderden",
       clubs: "Clubs",
       adults: "Volwassenen",
       camps: "Kampen"
@@ -90,7 +92,7 @@ export const nl = {
       },
       trainingCamps: {
         title: "Trainingskampen",
-        description: "Op aanvraag - minimum 6 atleten"
+        description: `Op aanvraag - minimum ${ATHLETE_COUNTS.MIN_TRAINING_CAMP_SIZE} atleten`
       },
       rocDuMaroc: {
         title: "Roc Du Maroc",
@@ -125,10 +127,10 @@ export const nl = {
   // Contact section
   contact: {
     title: "Contacteer mij",
-    intro: "Contacteer me vrijblijvend via onderstaand formulier en kijk wat ik voor jou kan betekenen",
+    intro: "Contacteer me vrijblijvend en kijk wat ik voor jou kan betekenen",
     letsConnect: "Laten we verbinden",
     email: "E-mail",
-    emailMessage: "Stuur me een bericht via onderstaand formulier",
+    emailMessage: "Stuur me een bericht",
     professionalCoach: "Professionele coach",
     expertTitle: "Zwem- en triatlonexpert",
     responseTime: "Reactietijd",
