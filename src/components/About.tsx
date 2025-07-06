@@ -90,14 +90,14 @@ export default function About({ locale, t }: Props) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <motion.h1 
+            <motion.p 
               className="text-5xl md:text-7xl lg:text-8xl font-display font-black text-white mb-6 leading-tight"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 100 }}
             >
               Ward Pellegrims
-            </motion.h1>
+            </motion.p>
             
             <motion.p 
               className="text-xl md:text-2xl lg:text-3xl text-ocean-100 font-medium mb-8 max-w-3xl mx-auto"

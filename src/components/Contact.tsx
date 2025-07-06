@@ -161,9 +161,9 @@ export default function Contact({ t }: Props) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
           >
-            <h3 className="text-4xl md:text-5xl font-display font-bold text-athletic-dark mb-8">
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-athletic-dark mb-8">
               {t.contact.title}
-            </h3>
+            </h2>
             
             <GlassCard padding="lg" className="text-center">
               <motion.div

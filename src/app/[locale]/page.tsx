@@ -21,6 +21,7 @@ export default async function Home({ params }: Props) {
     <div className="min-h-screen bg-white">
       <StructuredData locale={locale} />
       <Header locale={locale} t={t} />
+      <h1 className="sr-only">{t.meta.title}</h1>
       <main>
         <About locale={locale} t={t} />
         <Coaching locale={locale} t={t} />

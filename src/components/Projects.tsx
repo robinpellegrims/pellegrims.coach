@@ -215,7 +215,7 @@ export default function Projects({ t }: Props) {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h4 className="text-lg font-display font-bold text-athletic-dark mb-2 group-hover:text-ocean-700 transition-colors">
+                    <h3 className="text-lg font-display font-bold text-athletic-dark mb-2 group-hover:text-ocean-700 transition-colors">
                       {project.link ? (
                         <a 
                           href={project.link}
@@ -228,7 +228,7 @@ export default function Projects({ t }: Props) {
                       ) : (
                         project.title
                       )}
-                    </h4>
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed mb-3">
                       {renderProjectDescription(project)}
                     </p>

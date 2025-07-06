@@ -9,6 +9,63 @@ import { GlassHeader } from '@/components/ui/glass-header'
 import type { Locale } from '@/lib/i18n'
 import type { TranslationKey } from '@/lib/translations'
 
+// Social media links configuration
+const socialLinks = [
+  { href: "https://twitter.com/WardPel", icon: TwitterIcon, platform: "Twitter" },
+  { href: "https://www.facebook.com/ward.pellegrims/", icon: FacebookIcon, platform: "Facebook" },
+  { href: "https://www.instagram.com/wardpel/", icon: InstagramIcon, platform: "Instagram" },
+  { href: "https://www.linkedin.com/in/pellegrimsward/", icon: LinkedinIcon, platform: "LinkedIn" }
+] as const
+
+// Reusable social link component
+const SocialLink = ({
+  href,
+  icon: Icon,
+  platform,
+  size = 18,
+  className = "",
+  ...motionProps
+}: {
+  href: string
+  icon: React.ComponentType<{ size: number }>
+  platform: string
+  size?: number
+  className?: string
+} & React.ComponentProps<typeof motion.a>) => (
+  <motion.a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={`text-ocean-700 hover:text-ocean-800 rounded-full hover:bg-ocean-50 transition-all duration-300 ${className}`}
+    aria-label={`Visit ${platform} profile`}
+    {...motionProps}
+  >
+    <Icon size={size} />
+  </motion.a>
+)
+
+// Contact button component
+const ContactButton = ({
+  onClick,
+  size = 18,
+  className = "",
+  ...motionProps
+}: {
+  onClick: () => void
+  size?: number
+  className?: string
+} & React.ComponentProps<typeof motion.button>) => (
+  <motion.button
+    onClick={onClick}
+    className={`text-ocean-700 hover:text-ocean-800 rounded-full hover:bg-ocean-50 transition-all duration-300 ${className}`}
+    title="Contact me"
+    aria-label="Contact me"
+    {...motionProps}
+  >
+    <EnvelopeIcon size={size} />
+  </motion.button>
+)
+
 type Props = {
   locale: Locale
   t: TranslationKey
@@ -96,7 +153,7 @@ export default function Header({ locale, t }: Props) {
               <Link
                 href={otherLocalePath}
                 onClick={handleLanguageSwitch}
-                className="flex items-center space-x-2 text-ocean-600 hover:text-ocean-700 transition-colors duration-300 p-2 rounded-lg hover:bg-ocean-50"
+                className="flex items-center space-x-2 text-ocean-700 hover:text-ocean-800 transition-colors duration-300 p-2 rounded-lg hover:bg-ocean-50"
               >
                 <FaGlobe size={16} />
                 <span className="text-sm font-medium">{otherLocale.toUpperCase()}</span>
@@ -104,35 +161,25 @@ export default function Header({ locale, t }: Props) {
 
               {/* Social Links - Desktop */}
               <div className="hidden md:flex items-center space-x-3">
-                {[
-                  { href: "https://twitter.com/WardPel", icon: FaTwitter },
-                  { href: "https://www.facebook.com/ward.pellegrims/", icon: FaFacebookF },
-                  { href: "https://www.instagram.com/wardpel/", icon: FaInstagram },
-                  { href: "https://www.linkedin.com/in/pellegrimsward/", icon: FaLinkedin }
-                ].map((social, index) => (
-                  <motion.a
+                {socialLinks.map((social, index) => (
+                  <SocialLink
                     key={index}
                     href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-ocean-500 hover:text-ocean-700 p-2 rounded-full hover:bg-ocean-50 transition-all duration-300"
+                    icon={social.icon}
+                    platform={social.platform}
+                    className="p-2"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
-                  >
-                    <social.icon size={18} />
-                  </motion.a>
+                  />
                 ))}
                 
                 {/* Contact Button */}
-                <motion.button
+                <ContactButton
                   onClick={() => scrollToSection('contact')}
-                  className="text-ocean-500 hover:text-ocean-700 p-2 rounded-full hover:bg-ocean-50 transition-all duration-300"
+                  className="p-2"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
-                  title="Contact me"
-                >
-                  <FaEnvelope size={18} />
-                </motion.button>
+                />
               </div>
 
               {/* Mobile Menu Button */}
@@ -140,6 +187,10 @@ export default function Header({ locale, t }: Props) {
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="lg:hidden p-2 rounded-lg text-athletic-dark hover:bg-ocean-50 transition-colors duration-300"
                 whileTap={{ scale: 0.95 }}
+                aria-label="Toggle navigation menu"
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
+                aria-haspopup="true"
               >
                 {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
               </motion.button>
@@ -157,6 +208,7 @@ export default function Header({ locale, t }: Props) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 lg:hidden"
+            id="mobile-menu"
           >
             {/* Backdrop */}
             <motion.div
@@ -220,7 +272,7 @@ export default function Header({ locale, t }: Props) {
                   <Link
                     href={otherLocalePath}
                     onClick={handleLanguageSwitch}
-                    className="inline-flex items-center space-x-2 text-ocean-600 hover:text-ocean-700 transition-colors duration-300 p-3 rounded-lg hover:bg-ocean-50"
+                    className="inline-flex items-center space-x-2 text-ocean-700 hover:text-ocean-800 transition-colors duration-300 p-3 rounded-lg hover:bg-ocean-50"
                   >
                     <FaGlobe size={20} />
                     <span className="font-medium">{otherLocale.toUpperCase()}</span>
@@ -229,41 +281,33 @@ export default function Header({ locale, t }: Props) {
 
                 {/* Mobile Social Links */}
                 <div className="flex justify-center space-x-4">
-                  {[
-                    { href: "https://twitter.com/WardPel", icon: FaTwitter },
-                    { href: "https://www.facebook.com/ward.pellegrims/", icon: FaFacebookF },
-                    { href: "https://www.instagram.com/wardpel/", icon: FaInstagram },
-                    { href: "https://www.linkedin.com/in/pellegrimsward/", icon: FaLinkedin }
-                  ].map((social, index) => (
-                    <motion.a
+                  {socialLinks.map((social, index) => (
+                    <SocialLink
                       key={index}
                       href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-ocean-500 hover:text-ocean-700 p-3 rounded-full hover:bg-ocean-50 transition-all duration-300"
+                      icon={social.icon}
+                      platform={social.platform}
+                      size={20}
+                      className="p-3"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.5 + index * 0.1 }}
-                    >
-                      <social.icon size={20} />
-                    </motion.a>
+                    />
                   ))}
                   
                   {/* Contact Button */}
-                  <motion.button
+                  <ContactButton
                     onClick={() => scrollToSection('contact')}
-                    className="text-ocean-500 hover:text-ocean-700 p-3 rounded-full hover:bg-ocean-50 transition-all duration-300"
+                    size={20}
+                    className="p-3"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 + 4 * 0.1 }}
-                    title="Contact me"
-                  >
-                    <FaEnvelope size={20} />
-                  </motion.button>
+                  />
                 </div>
               </div>
             </motion.div>
