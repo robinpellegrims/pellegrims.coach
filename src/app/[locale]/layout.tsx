@@ -16,6 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = getTranslations(locale);
   
   const siteUrl = 'https://www.pellegrims.coach';
+  
+  // Construct canonical URL based on locale - this ensures the canonical URL 
+  // points to the equivalent page content for the current locale
+  const canonicalUrl = locale === 'en' ? `${siteUrl}/en` : `${siteUrl}/nl`;
+  
   const pageUrl = locale === 'en' ? siteUrl : `${siteUrl}/nl`;
   const ogImageUrl = `${siteUrl}/images/banner_1920.jpg`;
   
@@ -55,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [ogImageUrl],
     },
     alternates: {
-      canonical: pageUrl,
+      canonical: canonicalUrl,
       languages: {
         'en-US': siteUrl,
         'nl-BE': `${siteUrl}/nl`,
