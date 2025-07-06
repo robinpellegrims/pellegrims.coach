@@ -1,6 +1,6 @@
 'use client'
 
-import { FaChartLine, FaClipboardList, FaSun, FaSwimmer, FaUsers, FaWater } from 'react-icons/fa'
+import { ChartLineIcon, ClipboardListIcon, SunIcon, SwimmerIcon, UsersIcon, WaterIcon } from '@/components/icons'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { AthleticButton } from '@/components/ui/athletic-button'
@@ -34,42 +34,42 @@ export default function Coaching({ t }: Props) {
 
   const services = [
     {
-      icon: FaClipboardList,
+      icon: ClipboardListIcon,
       title: t.coaching.services.swimmingTraining,
       gradient: 'from-ocean-500 to-ocean-600',
       description: t.coaching.serviceDescriptions.swimmingTraining,
       highlight: t.coaching.highlights.triathlon
     },
     {
-      icon: FaSwimmer,
+      icon: SwimmerIcon,
       title: t.coaching.services.triathlonTraining,
       gradient: 'from-ocean-600 to-ocean-700',
       description: t.coaching.serviceDescriptions.triathlonTraining,
       highlight: t.coaching.highlights.oneOnOne
     },
     {
-      icon: FaUsers,
+      icon: UsersIcon,
       title: t.coaching.services.swimmingTechnique,
       gradient: 'from-ocean-400 to-ocean-500',
       description: t.coaching.serviceDescriptions.swimmingTechnique,
       highlight: t.coaching.highlights.clubs
     },
     {
-      icon: FaWater,
+      icon: WaterIcon,
       title: t.coaching.services.swimmingTechniqueClubs,
       gradient: 'from-ocean-700 to-ocean-800',
       description: t.coaching.serviceDescriptions.swimmingTechniqueClubs,
       highlight: t.coaching.highlights.adults
     },
     {
-      icon: FaChartLine,
+      icon: ChartLineIcon,
       title: t.coaching.services.adults,
       gradient: 'from-ocean-500 to-ocean-700',
       description: t.coaching.serviceDescriptions.adults,
       highlight: t.coaching.highlights.advanced
     },
     {
-      icon: FaSun,
+      icon: SunIcon,
       title: t.coaching.services.trainingCamp,
       gradient: 'from-ocean-400 to-ocean-600',
       description: t.coaching.serviceDescriptions.trainingCamp,

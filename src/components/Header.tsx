@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedin, FaEnvelope, FaBars, FaTimes, FaGlobe } from 'react-icons/fa'
+import { TwitterIcon, FacebookIcon, InstagramIcon, LinkedinIcon, EnvelopeIcon, BarsIcon, TimesIcon, GlobeIcon } from '@/components/icons'
 import { GlassHeader } from '@/components/ui/glass-header'
 import type { Locale } from '@/lib/i18n'
 import type { TranslationKey } from '@/lib/translations'
@@ -155,7 +155,7 @@ export default function Header({ locale, t }: Props) {
                 onClick={handleLanguageSwitch}
                 className="flex items-center space-x-2 text-ocean-700 hover:text-ocean-800 transition-colors duration-300 p-2 rounded-lg hover:bg-ocean-50"
               >
-                <FaGlobe size={16} />
+                <GlobeIcon size={16} />
                 <span className="text-sm font-medium">{otherLocale.toUpperCase()}</span>
               </Link>
 
@@ -192,7 +192,7 @@ export default function Header({ locale, t }: Props) {
                 aria-controls="mobile-menu"
                 aria-haspopup="true"
               >
-                {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+                {isMenuOpen ? <TimesIcon size={24} /> : <BarsIcon size={24} />}
               </motion.button>
             </div>
           </div>
@@ -274,7 +274,7 @@ export default function Header({ locale, t }: Props) {
                     onClick={handleLanguageSwitch}
                     className="inline-flex items-center space-x-2 text-ocean-700 hover:text-ocean-800 transition-colors duration-300 p-3 rounded-lg hover:bg-ocean-50"
                   >
-                    <FaGlobe size={20} />
+                    <GlobeIcon size={20} />
                     <span className="font-medium">{otherLocale.toUpperCase()}</span>
                   </Link>
                 </div>

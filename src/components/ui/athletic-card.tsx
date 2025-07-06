@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface AthleticCardProps {
@@ -16,7 +13,7 @@ export function AthleticCard({
   variant = 'default',
   interactive = true
 }: AthleticCardProps) {
-  const baseClasses = "bg-white rounded-xl shadow-lg border border-ocean-100 overflow-hidden"
+  const baseClasses = "bg-white rounded-xl shadow-lg border border-ocean-100 overflow-hidden animate-slide-up"
   
   const variantClasses = {
     default: "",
@@ -26,18 +23,12 @@ export function AthleticCard({
   }
 
   const interactiveClasses = interactive 
-    ? "hover:shadow-athletic hover:border-ocean-200 transform hover:-translate-y-2 transition-all duration-300 ease-out" 
+    ? "hover:shadow-athletic hover:border-ocean-200 transform hover:-translate-y-2 transition-all duration-300 ease-out hover:scale-105" 
     : ""
 
   return (
-    <motion.div
-      className={`${baseClasses} ${variantClasses[variant]} ${interactiveClasses} ${className}`}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      whileHover={interactive ? { y: variant === 'service' ? -8 : -4, scale: variant === 'stat' ? 1.05 : 1.02 } : {}}
-    >
+    <div className={`${baseClasses} ${variantClasses[variant]} ${interactiveClasses} ${className}`}>
       {children}
-    </motion.div>
+    </div>
   )
 }

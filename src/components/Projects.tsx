@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { FaExternalLinkAlt, FaArrowRight } from 'react-icons/fa'
+import { ExternalLinkIcon, ArrowRightIcon } from '@/components/icons'
 import { AthleticCard } from '@/components/ui/athletic-card'
 import type { Locale } from '@/lib/i18n'
 import type { TranslationKey } from '@/lib/translations'
@@ -207,7 +207,7 @@ export default function Projects({ t }: Props) {
                           whileTap={{ scale: 0.95 }}
                         >
                           <span>{t.projects.viewProject}</span>
-                          <FaExternalLinkAlt />
+                          <ExternalLinkIcon />
                         </motion.a>
                       </motion.div>
                     )}
@@ -243,7 +243,7 @@ export default function Projects({ t }: Props) {
                         transition={{ type: "spring", stiffness: 300 }}
                       >
                         <span>{t.projects.view}</span>
-                        <FaArrowRight className="ml-1 text-xs group-hover/link:translate-x-1 transition-transform" />
+                        <ArrowRightIcon className="ml-1 text-xs group-hover/link:translate-x-1 transition-transform" />
                       </motion.a>
                     )}
                   </div>

@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface GlassCardProps {
@@ -16,7 +13,7 @@ export function GlassCard({
   interactive = true,
   padding = 'md'
 }: GlassCardProps) {
-  const baseClasses = "backdrop-blur-2xl bg-white/80 border border-ocean-200/30 rounded-xl shadow-glass"
+  const baseClasses = "backdrop-blur-2xl bg-white/80 border border-ocean-200/30 rounded-xl shadow-glass animate-slide-up"
   
   const paddingClasses = {
     sm: "p-4",
@@ -29,13 +26,8 @@ export function GlassCard({
     : ""
 
   return (
-    <motion.div
-      className={`${baseClasses} ${paddingClasses[padding]} ${interactiveClasses} ${className}`}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
+    <div className={`${baseClasses} ${paddingClasses[padding]} ${interactiveClasses} ${className}`}>
       {children}
-    </motion.div>
+    </div>
   )
 }

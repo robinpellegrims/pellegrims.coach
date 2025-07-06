@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
-import { FaPaperPlane, FaCheckCircle, FaExclamationTriangle, FaUser, FaEnvelope, FaTag, FaComment } from 'react-icons/fa'
+import { PaperPlaneIcon, CheckCircleIcon, ExclamationTriangleIcon, UserIcon, EnvelopeIcon, TagIcon, CommentIcon } from '@/components/icons'
 import { AthleticButton } from '@/components/ui/athletic-button'
 import { GlassCard } from '@/components/ui/glass-card'
 import { StatCard } from '@/components/ui/stat-card'
@@ -172,7 +172,7 @@ export default function Contact({ t }: Props) {
                 transition={{ duration: 0.5, delay: 0.4, type: "spring", stiffness: 200 }}
                 className="w-20 h-20 bg-athletic-success rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
               >
-                <FaCheckCircle className="text-white text-3xl" />
+                <CheckCircleIcon className="text-white text-3xl" />
               </motion.div>
               
               <h4 className="text-2xl font-display font-bold text-athletic-success mb-4">
@@ -250,7 +250,7 @@ export default function Contact({ t }: Props) {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <div className="w-12 h-12 bg-gradient-ocean rounded-full flex items-center justify-center shadow-athletic">
-                    <FaEnvelope className="text-white text-lg" />
+                    <EnvelopeIcon className="text-white text-lg" />
                   </div>
                   <div>
                     <p className="font-semibold text-athletic-dark">{t.contact.email}</p>
@@ -264,7 +264,7 @@ export default function Contact({ t }: Props) {
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <div className="w-12 h-12 bg-gradient-ocean rounded-full flex items-center justify-center shadow-athletic">
-                    <FaUser className="text-white text-lg" />
+                    <UserIcon className="text-white text-lg" />
                   </div>
                   <div>
                     <p className="font-semibold text-athletic-dark">{t.contact.professionalCoach}</p>
@@ -298,7 +298,7 @@ export default function Contact({ t }: Props) {
                     className="relative"
                   >
                     <div className="relative">
-                      <FaUser className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
+                      <UserIcon className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
                         focusedField === 'name' || formData.name ? 'text-ocean-600' : 'text-gray-400'
                       }`} />
                       <input
@@ -323,7 +323,7 @@ export default function Contact({ t }: Props) {
                     className="relative"
                   >
                     <div className="relative">
-                      <FaEnvelope className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
+                      <EnvelopeIcon className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
                         focusedField === 'email' || formData.email ? 'text-ocean-600' : 'text-gray-400'
                       }`} />
                       <input
@@ -349,7 +349,7 @@ export default function Contact({ t }: Props) {
                   className="relative"
                 >
                   <div className="relative">
-                    <FaTag className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
+                    <TagIcon className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-colors duration-300 ${
                       focusedField === 'subject' || formData.subject ? 'text-ocean-600' : 'text-gray-400'
                     }`} />
                     <input
@@ -374,7 +374,7 @@ export default function Contact({ t }: Props) {
                   className="relative"
                 >
                   <div className="relative">
-                    <FaComment className={`absolute left-4 top-6 transition-colors duration-300 ${
+                    <CommentIcon className={`absolute left-4 top-6 transition-colors duration-300 ${
                       focusedField === 'message' || formData.message ? 'text-ocean-600' : 'text-gray-400'
                     }`} />
                     <textarea
@@ -415,7 +415,7 @@ export default function Contact({ t }: Props) {
                     animate={{ opacity: 1, scale: 1 }}
                     className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center space-x-3"
                   >
-                    <FaExclamationTriangle className="text-red-500 flex-shrink-0" />
+                    <ExclamationTriangleIcon className="text-red-500 flex-shrink-0" />
                     <p className="text-red-700">{t.contact.error}</p>
                   </motion.div>
                 )}
@@ -444,7 +444,7 @@ export default function Contact({ t }: Props) {
                       </>
                     ) : (
                       <>
-                        <FaPaperPlane />
+                        <PaperPlaneIcon />
                         <span>{t.contact.form.send}</span>
                       </>
                     )}

@@ -57,31 +57,9 @@ export default function About({ locale, t }: Props) {
           <div className="absolute inset-0 bg-black/20"></div>
         </motion.div>
 
-        {/* Animated Geometric Elements */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-ocean-400/30 rounded-full"
-          animate={{
-            rotate: 360,
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-ocean-500/20 rounded-lg backdrop-blur-sm"
-          animate={{
-            rotate: -360,
-            y: [-10, 10, -10],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
+        {/* Animated Geometric Elements - Optimized CSS animations */}
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-ocean-400/30 rounded-full animate-spin opacity-50"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-ocean-500/20 rounded-lg backdrop-blur-sm animate-pulse"></div>
 
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
@@ -234,19 +212,8 @@ export default function About({ locale, t }: Props) {
                   <div className="absolute inset-0 bg-gradient-to-t from-ocean-900/10 to-transparent"></div>
                 </div>
                 
-                {/* Floating ring animation */}
-                <motion.div
-                  className="absolute inset-0 w-64 h-64 rounded-full border-2 border-ocean-400/30"
-                  animate={{
-                    rotate: 360,
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
+                {/* Floating ring animation - Optimized CSS */}
+                <div className="absolute inset-0 w-64 h-64 rounded-full border-2 border-ocean-400/30 animate-spin opacity-70"></div>
               </motion.div>
 
               {/* Key Stats Grid */}
@@ -260,31 +227,9 @@ export default function About({ locale, t }: Props) {
                 <StatCard value={`${ATHLETE_COUNTS.CLIENTS}+`} label={t.about.clientsCoached} />
               </motion.div>
 
-              {/* Floating Elements */}
-              <motion.div
-                className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-ocean rounded-full opacity-20"
-                animate={{
-                  y: [-10, 10, -10],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              <motion.div
-                className="absolute -bottom-6 -left-6 w-12 h-12 bg-ocean-300 rounded-lg opacity-30"
-                animate={{
-                  x: [-5, 5, -5],
-                  rotate: [0, -180, -360],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
+              {/* Floating Elements - Optimized CSS animations */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-ocean rounded-full opacity-20 animate-float"></div>
+              <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-ocean-300 rounded-lg opacity-30 animate-float"></div>
             </motion.div>
           </div>
         </div>

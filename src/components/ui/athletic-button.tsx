@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { ReactNode } from 'react'
 
 interface AthleticButtonProps {
@@ -41,31 +38,15 @@ export function AthleticButton({
   const widthClass = fullWidth ? "w-full" : ""
 
   return (
-    <motion.button
+    <button
       type={type}
-      className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${widthClass} ${className}`}
+      className={`${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${widthClass} ${className} animate-fade-in active:scale-95`}
       onClick={onClick}
       disabled={disabled}
-      whileHover={{ scale: disabled ? 1 : 1.05 }}
-      whileTap={{ scale: disabled ? 1 : 0.95 }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
     >
-      <motion.span
-        className="relative z-10 flex items-center justify-center space-x-2"
-        initial={false}
-        animate={{ scale: disabled ? 0.95 : 1 }}
-      >
+      <span className={`relative z-10 flex items-center justify-center space-x-2 ${disabled ? 'scale-95' : ''}`}>
         {children}
-      </motion.span>
-      
-      {/* Ripple effect overlay */}
-      <motion.div
-        className="absolute inset-0 bg-white opacity-0"
-        whileTap={{ opacity: [0, 0.2, 0] }}
-        transition={{ duration: 0.3 }}
-      />
-    </motion.button>
+      </span>
+    </button>
   )
 }
