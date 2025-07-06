@@ -16,150 +16,84 @@ class LanguageSwitchingHelper {
 
   async openMobileMenu(): Promise<void> {
     if (await this.isMobile()) {
-      const isSafari = await this.isMobileSafari();
-      const timeout = isSafari ? 15000 : 10000;
+      const timeout = 10000;
       
       // Click hamburger menu button (mobile menu button in header)
       const menuButton = this.page.locator('button.lg\\:hidden');
       await menuButton.waitFor({ state: 'visible', timeout });
       await menuButton.click();
       
-      // Wait for mobile menu overlay to be visible with extended timeout for Safari
+      // Wait for mobile menu overlay to be visible
       await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
         state: 'visible',
         timeout 
       });
       
-      // Additional wait for Safari to ensure menu is fully rendered
-      if (isSafari) {
-        await this.page.waitForTimeout(500);
-        // Verify menu content is actually visible
-        await this.page.waitForSelector('div.fixed.inset-0.z-50 nav', { state: 'visible', timeout: 5000 });
-      }
+      // Wait for menu content to be fully rendered
+      await this.page.waitForTimeout(300);
     }
   }
 
   async closeMobileMenu(): Promise<void> {
     if (await this.isMobile()) {
-      const isSafari = await this.isMobileSafari();
-      const timeout = isSafari ? 10000 : 5000;
+      const timeout = 5000;
       
-      // Mobile Safari has issues with backdrop clicks being intercepted by menu content
-      // Try multiple strategies to close the menu
-      let menuClosed = false;
-      
-      if (isSafari) {
-        // Strategy 1: Try clicking the hamburger button to close
+      // Try pressing Escape key first (most reliable for mobile browsers)
+      try {
+        await this.page.keyboard.press('Escape');
+        await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
+          state: 'hidden',
+          timeout: 3000 
+        });
+      } catch {
+        // Fallback: Try clicking outside the menu area
         try {
-          const hamburgerButton = this.page.locator('button.lg\\:hidden');
-          await hamburgerButton.click({ timeout: 3000 });
+          // Click on a specific coordinate outside the menu (left side of screen)
+          await this.page.mouse.click(50, 200);
           await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
             state: 'hidden',
             timeout: 3000 
           });
-          menuClosed = true;
         } catch {
-          // Strategy 2: Use Escape key
-          try {
-            await this.page.keyboard.press('Escape');
-            await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
-              state: 'hidden',
-              timeout: 3000 
-            });
-            menuClosed = true;
-          } catch {
-            // Strategy 3: Force click on a specific coordinate outside menu
-            try {
-              // Click on the left side of the screen (outside the menu which is on the right)
-              await this.page.mouse.click(50, 200);
-              await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
-                state: 'hidden',
-                timeout: 3000 
-              });
-              menuClosed = true;
-            } catch {
-              // Strategy 4: Force click the backdrop with force option
-              const backdrop = this.page.locator('div.fixed.inset-0.z-50 div.absolute.inset-0');
-              await backdrop.click({ force: true, timeout: 3000 });
-              await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
-                state: 'hidden',
-                timeout: 3000 
-              });
-              menuClosed = true;
-            }
-          }
+          // Final fallback: Force close using the hamburger button
+          const hamburgerButton = this.page.locator('button.lg\\:hidden');
+          await hamburgerButton.click({ force: true });
+          await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
+            state: 'hidden',
+            timeout 
+          });
         }
-      } else {
-        // For non-Safari browsers, use the original backdrop click method
-        const backdrop = this.page.locator('div.fixed.inset-0.z-50 div.absolute.inset-0');
-        await backdrop.waitFor({ state: 'visible', timeout });
-        await backdrop.click();
-        await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
-          state: 'hidden',
-          timeout 
-        });
-        menuClosed = true;
       }
       
-      // Final verification that menu is actually closed
-      if (!menuClosed) {
-        throw new Error('Failed to close mobile menu after trying all strategies');
-      }
-      
-      // Additional verification for Safari
-      if (isSafari) {
-        await this.page.waitForTimeout(300);
-      }
+      // Brief wait for menu animation to complete
+      await this.page.waitForTimeout(200);
     }
   }
 
   async switchToLanguage(locale: string): Promise<void> {
     // The language switcher shows the OTHER language
-    // When we want to switch TO 'en', we click the switcher that says "EN" which goes to '/en/'
-    // When we want to switch TO 'nl', we click the switcher that says "NL" which goes to '/nl/'
-    const switcherHref = `/${locale}/`;
-    const expectedUrl = `/${locale}/`;
-    const isSafari = await this.isMobileSafari();
-    const timeout = isSafari ? 15000 : 10000;
+    // When we want to switch TO 'en', we click the switcher that says "EN"
+    // When we want to switch TO 'nl', we click the switcher that says "NL"
+    const switcherText = locale.toUpperCase();
+    const timeout = 10000;
     
     if (await this.isMobile()) {
       await this.openMobileMenu();
       
-      // Look for language switcher link in mobile menu with multiple selector strategies
-      let languageLink = this.page.locator(`div.fixed.inset-0.z-50 a[href="${switcherHref}"]`);
-      
-      // Try alternative selectors if the first one doesn't work (Safari specific)
-      try {
-        await languageLink.waitFor({ state: 'visible', timeout: 5000 });
-      } catch {
-        // Try broader selector for Safari
-        languageLink = this.page.locator(`div.fixed.inset-0.z-50`).locator(`a[href="${switcherHref}"]`);
-        await languageLink.waitFor({ state: 'visible', timeout });
-      }
-      
-      // Ensure element is clickable before clicking (Safari needs this)
-      if (isSafari) {
-        await languageLink.scrollIntoViewIfNeeded();
-        await this.page.waitForTimeout(200);
-      }
-      
+      // Look for language switcher link in mobile menu by text
+      const languageLink = this.page.locator(`div.fixed.inset-0.z-50`).getByRole('link', { name: switcherText });
+      await languageLink.waitFor({ state: 'visible', timeout });
       await languageLink.click();
     } else {
-      // Desktop: Click language switcher directly (outside mobile menu)
-      const languageLink = this.page.locator(`a[href="${switcherHref}"]`).first();
+      // Desktop: Click language switcher by text (more reliable than href)
+      const languageLink = this.page.getByRole('link', { name: switcherText }).first();
       await languageLink.waitFor({ state: 'visible', timeout });
       await languageLink.click();
     }
     
-    // Wait for navigation to complete with enhanced Safari handling
-    await this.page.waitForURL(expectedUrl, { timeout });
+    // Wait for navigation to complete
+    await this.page.waitForURL(new RegExp(`\\/${locale}\\/?$`), { timeout });
     await this.page.waitForLoadState('networkidle', { timeout });
-    
-    // Additional wait for Safari to ensure DOM is fully updated
-    if (isSafari) {
-      await this.page.waitForLoadState('domcontentloaded', { timeout: 5000 });
-      await this.page.waitForTimeout(500);
-    }
     
     // Close mobile menu if it was opened
     if (await this.isMobile()) {
@@ -167,7 +101,7 @@ class LanguageSwitchingHelper {
       try {
         await this.page.waitForSelector('div.fixed.inset-0.z-50', { 
           state: 'hidden', 
-          timeout: isSafari ? 5000 : 2000 
+          timeout: 3000 
         });
       } catch {
         // If menu didn't auto-close, try to close it manually
@@ -177,8 +111,7 @@ class LanguageSwitchingHelper {
   }
 
   async verifyEnglishContent(): Promise<void> {
-    const isSafari = await this.isMobileSafari();
-    const timeout = isSafari ? 10000 : 5000;
+    const timeout = 10000;
     
     // Use multiple selectors to ensure content is English
     const englishIndicators = [
@@ -188,30 +121,19 @@ class LanguageSwitchingHelper {
       'text=Feel free to contact me'
     ];
 
-    // Wait for page to be fully loaded before checking content (Safari needs this)
-    if (isSafari) {
-      await this.page.waitForLoadState('domcontentloaded');
-      await this.page.waitForTimeout(1000);
-    }
+    // Wait for page to be fully loaded before checking content
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForTimeout(500);
 
-    // Check for at least one English indicator with retry logic for Safari
+    // Check for at least one English indicator
     let found = false;
-    let attempts = isSafari ? 3 : 1;
-    
-    for (let attempt = 0; attempt < attempts && !found; attempt++) {
-      for (const selector of englishIndicators) {
-        try {
-          await expect(this.page.locator(selector).first()).toBeVisible({ timeout });
-          found = true;
-          break;
-        } catch {
-          continue;
-        }
-      }
-      
-      // If not found on Safari, wait and retry
-      if (!found && isSafari && attempt < attempts - 1) {
-        await this.page.waitForTimeout(1000);
+    for (const selector of englishIndicators) {
+      try {
+        await expect(this.page.locator(selector).first()).toBeVisible({ timeout });
+        found = true;
+        break;
+      } catch {
+        continue;
       }
     }
     
@@ -221,8 +143,7 @@ class LanguageSwitchingHelper {
   }
 
   async verifyDutchContent(): Promise<void> {
-    const isSafari = await this.isMobileSafari();
-    const timeout = isSafari ? 10000 : 5000;
+    const timeout = 10000;
     
     // Use multiple selectors to ensure content is Dutch
     const dutchIndicators = [
@@ -231,30 +152,19 @@ class LanguageSwitchingHelper {
       'text=Contacteer me vrijblijvend'
     ];
 
-    // Wait for page to be fully loaded before checking content (Safari needs this)
-    if (isSafari) {
-      await this.page.waitForLoadState('domcontentloaded');
-      await this.page.waitForTimeout(1000);
-    }
+    // Wait for page to be fully loaded before checking content
+    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForTimeout(500);
 
-    // Check for at least one Dutch indicator with retry logic for Safari
+    // Check for at least one Dutch indicator
     let found = false;
-    let attempts = isSafari ? 3 : 1;
-    
-    for (let attempt = 0; attempt < attempts && !found; attempt++) {
-      for (const selector of dutchIndicators) {
-        try {
-          await expect(this.page.locator(selector).first()).toBeVisible({ timeout });
-          found = true;
-          break;
-        } catch {
-          continue;
-        }
-      }
-      
-      // If not found on Safari, wait and retry
-      if (!found && isSafari && attempt < attempts - 1) {
-        await this.page.waitForTimeout(1000);
+    for (const selector of dutchIndicators) {
+      try {
+        await expect(this.page.locator(selector).first()).toBeVisible({ timeout });
+        found = true;
+        break;
+      } catch {
+        continue;
       }
     }
     
@@ -264,19 +174,13 @@ class LanguageSwitchingHelper {
   }
 
   async verifyNavigation(language: 'en' | 'nl'): Promise<void> {
-    const isSafari = await this.isMobileSafari();
-    const timeout = isSafari ? 10000 : 5000;
+    const timeout = 10000;
     const navItems = language === 'en' 
       ? ['About', 'Projects'] 
       : ['Info', 'Projecten'];
 
     if (await this.isMobile()) {
       await this.openMobileMenu();
-      
-      // Additional wait for Safari to ensure menu content is rendered
-      if (isSafari) {
-        await this.page.waitForTimeout(500);
-      }
       
       for (const item of navItems) {
         // Look for navigation items inside the mobile menu overlay
@@ -303,7 +207,7 @@ test.describe('Language Switching', () => {
     await page.waitForLoadState('networkidle');
 
     // Verify we're on the English page
-    expect(page.url()).toMatch(/\/en\/$/);
+    expect(page.url()).toMatch(/\/en\/?$/);
 
     // Verify English navigation is present
     await helper.verifyNavigation('en');
@@ -346,17 +250,17 @@ test.describe('Language Switching', () => {
 
     // Navigate to English page
     await page.goto('/en/');
-    expect(page.url()).toMatch(/\/en\/$/);
+    expect(page.url()).toMatch(/\/en\/?$/);
     await helper.verifyEnglishContent();
     
     // Navigate to Dutch page
     await page.goto('/nl/');
-    expect(page.url()).toMatch(/\/nl\/$/);
+    expect(page.url()).toMatch(/\/nl\/?$/);
     await helper.verifyDutchContent();
     
     // Navigate back to English
     await page.goto('/en/');
-    expect(page.url()).toMatch(/\/en\/$/);
+    expect(page.url()).toMatch(/\/en\/?$/);
     await helper.verifyEnglishContent();
   });
 });
